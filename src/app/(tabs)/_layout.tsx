@@ -2,12 +2,11 @@ import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { AppContextProvider } from '../context/AppContext';
 import '../global.css';
 
 export default function TabLayout() {
   return (
-    <AppContextProvider>
+    
     <SafeAreaView className='flex-1'>
     <Tabs
       initialRouteName="home"
@@ -70,7 +69,6 @@ export default function TabLayout() {
       />
     </Tabs>
     </SafeAreaView>
-    </AppContextProvider>
   );
 }
 
