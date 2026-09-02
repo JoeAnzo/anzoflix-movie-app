@@ -25,6 +25,7 @@ const VideoPlayer = ({ videoId }: VideoPlayerProps) => {
     );
   }
 
+  // FIXED: Added referrerpolicy attribute explicitly to the iframe
   const html = `
     <html>
       <body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;">
@@ -33,6 +34,7 @@ const VideoPlayer = ({ videoId }: VideoPlayerProps) => {
           height="100%"
           src="https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&playsinline=1"
           frameborder="0"
+          referrerpolicy="strict-origin-when-cross-origin"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen
           style="width:100%;height:100%;border:0;"
@@ -44,7 +46,10 @@ const VideoPlayer = ({ videoId }: VideoPlayerProps) => {
   return (
     <View style={styles.container}>
       <WebView
-        source={{ html }}
+        source={{ 
+          html,
+          baseUrl: 'https://youtube.com' 
+        }}
         style={styles.webView}
         javaScriptEnabled
         domStorageEnabled
@@ -87,4 +92,3 @@ const styles = StyleSheet.create({
 });
 
 export default VideoPlayer;
-

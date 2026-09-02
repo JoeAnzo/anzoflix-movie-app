@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { View, FlatList, Animated, StyleSheet } from 'react-native';
 
-export const MovieCardSkeleton = () => {
+export const SingleCardSkeleton = () => {
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -33,6 +33,8 @@ export const MovieCardSkeleton = () => {
     </Animated.View>
   );
 };
+
+export const MovieCardSkeleton = SingleCardSkeleton;
 
 interface MovieSectionSkeletonProps {
   titleWidth?: string;

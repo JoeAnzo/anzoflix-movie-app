@@ -21,20 +21,38 @@ const LanguageSelector = () => {
     };
   });
 
+  const languageItems = [
+    { label: 'English', value: 'en-US' },
+    ...items.filter((item: { value: string }) => item.value !== 'en-US'),
+  ];
+
   return (
-    <View>
+    <View className="w-[100px] z-10">
       <DropDownPicker
         open={open}
         value={selectedLanguage}
-        items={items}
+        items={languageItems}
         setOpen={setOpen}
         setValue={(value) => {
           if (value !== null) {
             setSelectedLanguage(String(value));
           }
         }}
-        placeholder={selectedLanguage}
+        placeholder="English"
         searchable={true}
+        style={{
+          backgroundColor: 'transparent',
+          borderWidth: 0,
+          minHeight: 36,
+        }}
+        textStyle={{
+          color: 'white',
+          fontSize: 12,
+        }}
+        dropDownContainerStyle={{
+          backgroundColor: '#27272a',
+          borderColor: '#52525b',
+        }}
       />
     </View>
   );

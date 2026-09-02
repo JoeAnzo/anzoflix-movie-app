@@ -1,5 +1,5 @@
 
-import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Animated } from 'react-native';
+import { Text, View, Image, ScrollView,Dimensions,TouchableOpacity, FlatList, Animated } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import {useRouter} from 'expo-router'
@@ -8,11 +8,12 @@ import Logo from '../components/Logo';
 import CardSection from '../components/CardSection';
 import VideoPlayer from '../components/videoPlayer';
 import { fetchMovieDetails, fetchTvDetails,fetchSimilarMovies,fetchSimilarTvs} from '../services/api';
+import { formatRuntime } from '../utils/utils';
 
 const DetailsScreen = () => {
   const router = useRouter();
   const { id, mediaType } = useLocalSearchParams<{ id: string; mediaType: 'movie' | 'tv' }>();
-
+  const { width:screenWidth} = Dimensions.get('window');
   const { data: details, isLoading: isLoadingDetails, error: detailsError } = useContent(
     ['details', mediaType, id],
     () => mediaType === 'movie' ? fetchMovieDetails(Number(id)) : fetchTvDetails(Number(id))
@@ -94,14 +95,15 @@ const DetailsScreen = () => {
         <View>
             <Image 
             source={{ uri: posterUrl }} 
-            className="w-[100%] h-[30vh] rounded-md bg-[#27272a]"
-            resizeMode="cover"
+            style={{width:screenWidth}}
+            className="aspect-[2/3] rounded-md"
+            resizeMode="contain"
             />
         </View>
         <View>
           <Text className='text-white text-3xl py-2 font-bold'>{isMovie ? details.title : details.name}</Text>
         </View>
-        <Text className='text-white text-lg py-2 font-bold'>Duration:{details.runtime} min</Text>
+        <Text className='text-white text-lg py-2 font-bold'>Duration: {formatRuntime(details.runtime)}</Text>
         <Text className='text-white text-lg py-2 font-bold'>Genres:{details.genres?.map((g: { name: string }) => g.name).join(', ')}</Text>
         {
           !isMovie && 

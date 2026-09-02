@@ -1,17 +1,19 @@
 import { Text, View, FlatList } from 'react-native';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useApp } from '../context/AppContext';
-import { MovieSectionSkeleton } from './CardSkeleton';
+import { MovieSectionSkeleton, SingleCardSkeleton } from './CardSkeleton';
 import { renderCard } from './CardDisplay';
 
 type Fetcher = (page?: number, language?: string) => Promise<any>;
 
 interface MovieSectionProps {
   title: string;
-  fetcher: Fetcher;
+  fetcher?: Fetcher;
+  data?: any[];
+  isLoading?: boolean;
 }
 
-const CardSection = ({ title, fetcher }: MovieSectionProps) => {
+const CardSection = ({ title, fetcher, data: staticData = [], isLoading: staticIsLoading = false }: MovieSectionProps) => {
   const { selectedLanguage } = useApp();
 
   const {
@@ -24,6 +26,8 @@ const CardSection = ({ title, fetcher }: MovieSectionProps) => {
     queryKey: ['card-section', title, selectedLanguage],
     initialPageParam: 1,
     queryFn: async ({ pageParam = 1 }) => {
+      if (!fetcher) return { results: [], page: pageParam, total_pages: pageParam };
+
       const result = await fetcher(pageParam, selectedLanguage);
 
       if (!result.success) {
@@ -37,17 +41,20 @@ const CardSection = ({ title, fetcher }: MovieSectionProps) => {
 
       return lastPage.page < lastPage.total_pages ? lastPage.page + 1 : undefined;
     },
+    enabled: Boolean(fetcher),
   });
 
-  const items = data?.pages.flatMap((page) => page.results ?? []) ?? [];
+  const items = fetcher
+    ? data?.pages.flatMap((page) => page.results ?? []) ?? []
+    : staticData;
 
-  if (isLoading && !data) {
+  if ((fetcher ? isLoading : staticIsLoading) && !data) {
     return <MovieSectionSkeleton />;
   }
 
   return (
     <View className="my-1">
-      <Text className="text-white text-xl font-bold mb-2">{title}</Text>
+      <Text className="text-white text-xl font-bold mb-4">{title}</Text>
 
       <FlatList
         data={items}
@@ -63,7 +70,7 @@ const CardSection = ({ title, fetcher }: MovieSectionProps) => {
         onEndReachedThreshold={0.5}
         ListFooterComponent={
           isFetchingNextPage ? (
-            <Text className="text-zinc-400 px-3">Loading...</Text>
+            <SingleCardSkeleton />
           ) : null
         }
         ListEmptyComponent={
