@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { View, FlatList, Animated, StyleSheet } from 'react-native';
 
 export const SingleCardSkeleton = () => {
-  const pulseAnim = useRef(new Animated.Value(1)).current;
+  const [pulseAnim] = useState(() => new Animated.Value(1));
 
   useEffect(() => {
     const pulse = Animated.loop(

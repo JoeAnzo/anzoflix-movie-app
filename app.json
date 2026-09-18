@@ -8,9 +8,11 @@
     "scheme": "movieboxclone",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.anzovulejoel.movieboxclone"
     },
     "android": {
+      "package": "com.anzovulejoel.movieboxclone",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -20,7 +22,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "bundler":"metro",
+      "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
@@ -33,7 +35,8 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

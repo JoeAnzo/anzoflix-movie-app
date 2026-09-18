@@ -1,6 +1,5 @@
 import {Text, View } from 'react-native'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import LanguageSelector from './languageSelector';
 
 const Logo = () => {
   return (

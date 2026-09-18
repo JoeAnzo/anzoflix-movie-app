@@ -1,21 +1,21 @@
-  import { Text,View,Image,Pressable } from "react-native";
-  import { MovieItem } from "../interfaces/content.interfaces";
-  import {useRouter} from 'expo-router'
-  
-  export const renderCard = ({ item }: { item: MovieItem }) => {
-    const router = useRouter()
+import { Text, View, Image, Pressable } from "react-native";
+import { MovieItem } from "../interfaces/content.interfaces";
+import { useRouter } from 'expo-router';
+
+const MovieCard = ({ item }: { item: MovieItem }) => {
+        const router = useRouter();
     if (!item.poster_path) return null;
 
     const posterUrl = `https://image.tmdb.org/t/p/w500/${item.poster_path}`;
 
-    const inferredMediaType = 'title' in item ? 'movie' : 'tv'
+        const inferredMediaType = item.media_type === 'tv' || item.name ? 'tv' : 'movie';
     
     const handlePress = () => {
         router.push({
             pathname: `../details/${item.id}`,
             params: { mediaType: inferredMediaType }
-        })
-    }
+        });
+    };
 
     return (
         <Pressable onPress={handlePress}>
@@ -34,6 +34,8 @@
             </View>
         </Pressable>
     );
-  };
+};
+
+export const renderCard = ({ item }: { item: MovieItem }) => <MovieCard item={item} />;
 
  

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, Platform, Pressable, Text } from 'react-native';
-import * as WebBrowser from 'expo-web-browser';
 import WebView from 'react-native-webview';
 
 interface VideoPlayerProps {

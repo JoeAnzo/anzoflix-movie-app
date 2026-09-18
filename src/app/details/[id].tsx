@@ -1,8 +1,7 @@
 
 import { Text, View, Image, ScrollView,Dimensions,TouchableOpacity, FlatList, Animated } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import {useRouter} from 'expo-router'
 import { useContent } from '../hooks/useContent';
 import Logo from '../components/Logo';
 import CardSection from '../components/CardSection';
