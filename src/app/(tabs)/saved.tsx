@@ -3,20 +3,22 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useRef, useState } from "react";
 import {
-    Animated,
-    Image,
-    Pressable,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  Animated,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import Logo from "../components/Logo";
+import Search from "../components/Search";
 import "../global.css";
 import {
-    getSavedMedia,
-    removeSavedMovie,
-    saveMovieToDatabase,
-    type MediaRecordType,
+  getSavedMedia,
+  removeSavedMovie,
+  saveMovieToDatabase,
+  type MediaRecordType,
 } from "../services/appwrite";
 
 interface SavedItem {
@@ -95,6 +97,7 @@ const SavedMediaCard = ({
 };
 
 export default function SavedScreen() {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [toastAction, setToastAction] = useState<(() => void) | null>(null);
@@ -199,60 +202,83 @@ export default function SavedScreen() {
   }
 
   return (
-    <ScrollView
-      className="flex-1 bg-black px-4 py-4"
-      showsVerticalScrollIndicator={false}
-    >
-      <Text className="mb-5 text-3xl font-bold text-white">Saved</Text>
-      {toastMessage && (
-        <Animated.View
-          pointerEvents="box-none"
-          style={{
-            opacity: toastAnim,
-            transform: [
-              {
-                translateY: toastAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [-10, 0],
-                }),
-              },
-            ],
-          }}
-          className="absolute left-4 right-4 top-4 z-50 rounded-full bg-white/10 px-4 py-3"
-        >
-          <View className="flex-row items-center justify-between gap-3">
-            <Text className="text-sm font-medium text-white">
-              {toastMessage}
-            </Text>
-            {toastAction && (
-              <TouchableOpacity
-                onPress={() => {
-                  toastAction();
-                  setToastMessage(null);
-                  setToastAction(null);
-                  Animated.timing(toastAnim, {
-                    toValue: 0,
-                    duration: 200,
-                    useNativeDriver: true,
-                  }).start();
-                }}
-                className="rounded-full bg-white/15 px-3 py-1.5"
-              >
-                <Text className="text-xs font-bold text-white">Undo</Text>
-              </TouchableOpacity>
-            )}
+    <View>
+      <View className="p-2">
+        <View className="flex-row items-center justify-between py-2">
+          <View className="flex-row items-center gap-2">
+            <TouchableOpacity onPress={() => router.back()} activeOpacity={0.7}>
+              <Ionicons name="arrow-back" size={24} color="white" />
+            </TouchableOpacity>
+            <Logo />
           </View>
-        </Animated.View>
-      )}
 
-      {renderMediaSection(
-        "Movies",
-        savedItems.filter((item) => item.media_type === "movie"),
-      )}
-      {renderMediaSection(
-        "TV Shows",
-        savedItems.filter((item) => item.media_type === "tv"),
-      )}
-    </ScrollView>
+          <TouchableOpacity
+            onPress={() => router.push("/(tabs)/profile")}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel="Go to profile"
+            className="h-10 w-10 items-center justify-center"
+          >
+            <Ionicons name="person-circle-outline" size={26} color="white" />
+          </TouchableOpacity>
+        </View>
+        <Search />
+      </View>
+      <ScrollView
+        className="flex-1 bg-black px-4 py-4"
+        showsVerticalScrollIndicator={false}
+      >
+        <Text className="mb-5 text-3xl font-bold text-white">Saved</Text>
+        {toastMessage && (
+          <Animated.View
+            pointerEvents="box-none"
+            style={{
+              opacity: toastAnim,
+              transform: [
+                {
+                  translateY: toastAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [-10, 0],
+                  }),
+                },
+              ],
+            }}
+            className="absolute left-4 right-4 top-4 z-50 rounded-full bg-white/10 px-4 py-3"
+          >
+            <View className="flex-row items-center justify-between gap-3">
+              <Text className="text-sm font-medium text-white">
+                {toastMessage}
+              </Text>
+              {toastAction && (
+                <TouchableOpacity
+                  onPress={() => {
+                    toastAction();
+                    setToastMessage(null);
+                    setToastAction(null);
+                    Animated.timing(toastAnim, {
+                      toValue: 0,
+                      duration: 200,
+                      useNativeDriver: true,
+                    }).start();
+                  }}
+                  className="rounded-full bg-white/15 px-3 py-1.5"
+                >
+                  <Text className="text-xs font-bold text-white">Undo</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </Animated.View>
+        )}
+
+        {renderMediaSection(
+          "Movies",
+          savedItems.filter((item) => item.media_type === "movie"),
+        )}
+        {renderMediaSection(
+          "TV Shows",
+          savedItems.filter((item) => item.media_type === "tv"),
+        )}
+      </ScrollView>
+    </View>
   );
 }
