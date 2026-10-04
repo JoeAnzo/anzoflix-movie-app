@@ -1,4 +1,6 @@
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View,TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import CardSection from '../components/CardSection';
 import Logo from '../components/Logo';
 import Search from '../components/Search';
@@ -13,11 +15,32 @@ import {
   topRatedTv,
 } from '../services/api';
 
-const home = () => {
+
+const Home = () => {
+
+  const router = useRouter();
+
   return (
     <View className='bg-black flex-1 p-2'>
       <View className='p-2'>
-        <Logo />
+        <View className="flex-row items-center justify-between py-2">
+          <View className="flex-row items-center gap-2">
+            <TouchableOpacity onPress={() => router.back()} activeOpacity={0.7}>
+              <Ionicons name="arrow-back" size={24} color="white" />
+            </TouchableOpacity>
+            <Logo />
+          </View>
+        
+          <TouchableOpacity
+            onPress={() => router.push("/(tabs)/profile")}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel="Go to profile"
+            className="h-10 w-10 items-center justify-center"
+          >
+          <Ionicons name="person-circle-outline" size={26} color="white" />
+          </TouchableOpacity>
+        </View>
         <Search />
       </View>
 
@@ -42,5 +65,5 @@ const home = () => {
   );
 };
 
-export default home;
+export default Home;
 
