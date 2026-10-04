@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { View, FlatList, Animated, StyleSheet } from 'react-native';
+import { useEffect, useState } from "react";
+import { Animated, FlatList, StyleSheet, View } from "react-native";
 
 export const SingleCardSkeleton = () => {
   const [pulseAnim] = useState(() => new Animated.Value(1));
@@ -8,16 +8,16 @@ export const SingleCardSkeleton = () => {
     const pulse = Animated.loop(
       Animated.sequence([
         Animated.timing(pulseAnim, {
-          toValue: 0.3, 
-          duration: 800,
-          useNativeDriver: true, 
-        }),
-        Animated.timing(pulseAnim, {
-          toValue: 1, 
+          toValue: 0.3,
           duration: 800,
           useNativeDriver: true,
         }),
-      ])
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+      ]),
     );
 
     pulse.start();
@@ -40,13 +40,15 @@ interface MovieSectionSkeletonProps {
   titleWidth?: string;
 }
 
-export const MovieSectionSkeleton = ({ titleWidth = 'w-36' }: MovieSectionSkeletonProps) => {
+export const MovieSectionSkeleton = ({
+  titleWidth = "w-36",
+}: MovieSectionSkeletonProps) => {
   const dummyData = Array.from({ length: 5 }, (_, i) => i);
 
   return (
-    <View className="w-full my-4 pl-4">
-      <View className={`h-6 mb-3 rounded bg-zinc-800 ${titleWidth}`} />
-      
+    <View className="my-1 w-full">
+      <View className={`mb-4 h-7 rounded bg-zinc-800 ${titleWidth}`} />
+
       <FlatList
         data={dummyData}
         renderItem={() => <MovieCardSkeleton />}
@@ -67,10 +69,10 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   listMinWidth: {
-    width: '100%',
+    width: "100%",
   },
   listContent: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingRight: 16,
   },
 });
