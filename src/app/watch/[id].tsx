@@ -62,7 +62,7 @@ export default function WatchScreen() {
   }, [id, mediaType]);
 
   return (
-    <View className="flex-1 bg-black">
+    <View className="flex-1 bg-[#141414]">
       <View className="flex-row items-center gap-4 px-4 py-3">
         <TouchableOpacity
           onPress={() => router.back()}

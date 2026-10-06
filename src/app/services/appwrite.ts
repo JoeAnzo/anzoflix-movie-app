@@ -61,7 +61,7 @@ export const signUpWithEmailAndPassword = async (
 ) => {
   try {
     const fallbackUsername = email.split("@")[0];
-    const generatedAvatarUrl = avatars
+    const generatedAvatarUrl = await avatars
       .getInitials({ name: fallbackUsername, width: 200, height: 200 })
       .toString();
 
@@ -540,6 +540,30 @@ export const getWatchlistMediaByType = async (mediaType: MediaRecordType) => {
     return response.documents;
   } catch (error) {
     console.error("Appwrite watchlist fetch failed:", error);
+    return [];
+  }
+};
+
+export const getWatchlistMedia = async () => {
+  try {
+    const currentUser = await getCurrentUser();
+
+    if (!currentUser) {
+      return [];
+    }
+
+    const response = await databases.listDocuments(
+      DATABASE_ID,
+      WATCHLIST_TABLE_ID,
+      [
+        Query.equal("user_id", [currentUser.$id]),
+        Query.orderDesc("$createdAt"),
+      ],
+    );
+
+    return response.documents;
+  } catch (error) {
+    console.error("Appwrite watchlist-media fetch failed:", error);
     return [];
   }
 };

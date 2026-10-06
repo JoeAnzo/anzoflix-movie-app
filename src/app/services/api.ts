@@ -128,44 +128,52 @@ export const fetchSimilarTvs = (movieId: number, page?: number) =>
 export const fetchAvailableLanguages = (page?: number) =>
   fetchContent(ENDPOINTS.languages, page);
 
-export type MediaType = "movie" | "tv";
+export type MediaType = "movie" | "tv" | "series";
 
-/**
- * Ask the app's licensed playback backend to resolve an available source.
- * The backend should return { available: true, playbackUrl: "https://..." }
- * or { available: false }. Provider selection and rights checks belong there.
- */
+interface PlaybackOptions {
+  season?: number;
+  episode?: number;
+}
+
+
 export const resolvePlaybackSource = async (
   mediaType: MediaType,
   contentId: string,
+  options: PlaybackOptions = {}
 ): Promise<string | null> => {
-  const resolverUrl = process.env.EXPO_PUBLIC_PLAYBACK_API_URL;
-  if (!resolverUrl) {
-    throw new Error("Playback service is not configured yet.");
+  const resolverUrl = process.env.EXPO_PUBLIC_PLAYBACK_API_URL || "https://vidcore.org";
+  const cleanBase = resolverUrl.replace(/\/\$/, "");
+
+  // Build the correct URL path pattern required by VidCore
+  let path = "";
+  if (mediaType === "movie") {
+    path = `/embed/movie/${contentId}`;
+  } else {
+    // If it's a series and parameters aren't provided yet, default to season 1 episode 1
+    const season = options.season ?? 1;
+    const episode = options.episode ?? 1;
+    path = `/embed/series/${contentId}/${season}/${episode}`;
   }
 
-  const url = new URL(`${resolverUrl.replace(/\/$/, "")}/resolve`);
-  url.searchParams.set("mediaType", mediaType);
-  url.searchParams.set("id", contentId);
+  const finalUrl = `${cleanBase}${path}`;
 
-  const response = await fetch(url.toString(), {
-    headers: { accept: "application/json" },
-  });
-  if (response.status === 404 || response.status === 204) return null;
-  if (!response.ok) {
-    throw new Error(`Playback lookup failed (${response.status}).`);
+  try {
+    // Use a lightweight HEAD request to verify source availability
+    const response = await fetch(finalUrl, { method: "HEAD" });
+    
+    if (response.status === 404 || response.status === 204) {
+      return null;
+    }
+    
+    if (!response.ok) {
+      throw new Error(`VidCore endpoint lookup failed with status: ${response.status}`);
+    }
+
+    return finalUrl;
+  } catch (error) {
+    console.error("Failed to resolve VidCore playback source:", error);
+    return null;
   }
-
-  const result: { available?: boolean; playbackUrl?: string } =
-    await response.json();
-  if (!result.available || !result.playbackUrl) return null;
-
-  const playbackUrl = new URL(result.playbackUrl);
-  if (playbackUrl.protocol !== "https:") {
-    throw new Error("Playback source must use HTTPS.");
-  }
-
-  return playbackUrl.toString();
 };
 
 export const fetchTvDetails = (tvId: number, page?: number) =>

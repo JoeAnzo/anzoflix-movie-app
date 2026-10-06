@@ -3,26 +3,26 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useRef, useState } from "react";
 import {
-  ActivityIndicator,
-  Animated,
-  Image,
-  Pressable,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    Animated,
+    Image,
+    Pressable,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
 import Logo from "../components/Logo";
 import Search from "../components/Search";
 import "../global.css";
 import {
-  getSavedMedia,
-  removeSavedMovie,
-  saveMovieToDatabase,
-  type MediaRecordType,
+    addMovieToWatchlist,
+    getWatchlistMedia,
+    removeMovieFromWatchlist,
+    type MediaRecordType,
 } from "../services/appwrite";
 
-interface SavedItem {
+interface WatchlistItem {
   $id: string;
   tmdb_id: string;
   movie_title?: string;
@@ -30,50 +30,37 @@ interface SavedItem {
   media_type: MediaRecordType;
 }
 
-const savedMediaQueryKey = ["saved-media"] as const;
+const watchlistQueryKey = ["watchlist-media"] as const;
 
-const SavedMediaCard = ({
+function WatchlistCard({
   item,
   onDelete,
 }: {
-  item: SavedItem;
-  onDelete?: (item: SavedItem) => void;
-}) => {
+  item: WatchlistItem;
+  onDelete: (item: WatchlistItem) => void;
+}) {
   const router = useRouter();
 
   if (!item.movie_poster) {
     return null;
   }
 
-  const handlePress = () => {
-    router.push({
-      pathname: "/details/[id]",
-      params: {
-        id: item.tmdb_id,
-        mediaType: item.media_type,
-      },
-    });
-  };
-
-  const handleDelete = async () => {
-    try {
-      await removeSavedMovie(item.tmdb_id, item.media_type);
-      onDelete?.(item);
-    } catch (error) {
-      console.error("Delete saved item failed:", error);
-    }
-  };
-
   return (
     <View style={{ width: 110 }} className="mr-3 mb-5">
-      <Pressable onPress={handlePress}>
+      <Pressable
+        onPress={() =>
+          router.push({
+            pathname: "/details/[id]",
+            params: { id: item.tmdb_id, mediaType: item.media_type },
+          })
+        }
+      >
         <Image
           source={{ uri: item.movie_poster }}
           className="h-[160px] w-[110px] rounded-md bg-zinc-800"
           resizeMode="cover"
         />
       </Pressable>
-
       <View className="mt-2 flex-row items-center">
         <View className="min-w-0 flex-1">
           <Text className="text-xs font-medium text-white" numberOfLines={2}>
@@ -84,9 +71,9 @@ const SavedMediaCard = ({
           </Text>
         </View>
         <TouchableOpacity
-          onPress={handleDelete}
+          onPress={() => onDelete(item)}
           accessibilityRole="button"
-          accessibilityLabel={`Remove ${item.movie_title || "title"} from saved`}
+          accessibilityLabel={`Remove ${item.movie_title || "title"} from watchlist`}
           className="ml-1 h-8 w-8 items-center justify-center rounded-full bg-zinc-800"
           hitSlop={{ top: 8, right: 8, bottom: 8, left: 8 }}
         >
@@ -95,9 +82,9 @@ const SavedMediaCard = ({
       </View>
     </View>
   );
-};
+}
 
-export default function SavedScreen() {
+export default function WatchlistScreen() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -106,12 +93,13 @@ export default function SavedScreen() {
   const [headerHeight, setHeaderHeight] = useState(0);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const {
-    data: savedItems = [],
+    data: watchlistItems = [],
     isPending,
     refetch,
-  } = useQuery<SavedItem[]>({
-    queryKey: savedMediaQueryKey,
-    queryFn: async () => (await getSavedMedia()) as unknown as SavedItem[],
+  } = useQuery<WatchlistItem[]>({
+    queryKey: watchlistQueryKey,
+    queryFn: async () =>
+      (await getWatchlistMedia()) as unknown as WatchlistItem[],
     staleTime: 60_000,
     enabled: false,
   });
@@ -148,47 +136,51 @@ export default function SavedScreen() {
     }, [refetch]),
   );
 
-  const handleDeleteSavedItem = (item: SavedItem) => {
-    queryClient.setQueryData<SavedItem[]>(savedMediaQueryKey, (current = []) =>
-      current.filter((entry) => entry.$id !== item.$id),
-    );
+  const handleDelete = async (item: WatchlistItem) => {
+    try {
+      await removeMovieFromWatchlist(item.tmdb_id, item.media_type);
+      queryClient.setQueryData<WatchlistItem[]>(
+        watchlistQueryKey,
+        (current = []) => current.filter((entry) => entry.$id !== item.$id),
+      );
 
-    const undoAction = async () => {
-      try {
-        const restoredItem = await saveMovieToDatabase(
-          item.tmdb_id,
-          item.movie_poster,
-          item.media_type,
-          item.movie_title,
-        );
+      const undoAction = async () => {
+        try {
+          const restoredItem = await addMovieToWatchlist(
+            item.tmdb_id,
+            item.movie_poster,
+            item.media_type,
+            item.movie_title,
+          );
+          queryClient.setQueryData<WatchlistItem[]>(
+            watchlistQueryKey,
+            (current = []) => [
+              restoredItem as unknown as WatchlistItem,
+              ...current,
+            ],
+          );
+        } catch (error) {
+          console.error("Undo watchlist removal failed:", error);
+        }
+      };
 
-        queryClient.setQueryData<SavedItem[]>(
-          savedMediaQueryKey,
-          (current = []) => [restoredItem as unknown as SavedItem, ...current],
-        );
-      } catch (error) {
-        console.error("Undo save failed:", error);
-      }
-    };
-
-    showToast("Removed from saved", undoAction);
+      showToast("Removed from watchlist", undoAction);
+    } catch (error) {
+      console.error("Remove watchlist item failed:", error);
+    }
   };
 
-  const renderMediaSection = (title: string, items: SavedItem[]) => (
+  const renderSection = (title: string, items: WatchlistItem[]) => (
     <View className="mb-6">
       <Text className="mb-3 text-xl font-bold text-white">{title}</Text>
       {items.length === 0 ? (
         <Text className="text-sm text-zinc-400">
-          No saved {title.toLowerCase()} yet.
+          No {title.toLowerCase()} in your watchlist yet.
         </Text>
       ) : (
         <View className="flex-row flex-wrap" style={{ gap: 12 }}>
           {items.map((item) => (
-            <SavedMediaCard
-              key={item.$id}
-              item={item}
-              onDelete={handleDeleteSavedItem}
-            />
+            <WatchlistCard key={item.$id} item={item} onDelete={handleDelete} />
           ))}
         </View>
       )}
@@ -198,11 +190,7 @@ export default function SavedScreen() {
   if (isPending) {
     return (
       <View className="flex-1 items-center justify-center bg-[#141414]">
-        <ActivityIndicator
-          color="#E50914"
-          size="large"
-          className="text-[#E50914] scale-150"
-        />
+        <ActivityIndicator color="#E50914" size="large" />
       </View>
     );
   }
@@ -210,7 +198,7 @@ export default function SavedScreen() {
   return (
     <View className="flex-1 bg-[#141414]" style={{ position: "relative" }}>
       <View
-        className="p-2 bg-[#141414]"
+        className="bg-[#141414] p-2"
         onLayout={(event) => setHeaderHeight(event.nativeEvent.layout.height)}
       >
         <View className="flex-row items-center justify-between py-2">
@@ -220,7 +208,6 @@ export default function SavedScreen() {
             </TouchableOpacity>
             <Logo />
           </View>
-
           <TouchableOpacity
             onPress={() => router.push("/profile")}
             activeOpacity={0.7}
@@ -237,14 +224,14 @@ export default function SavedScreen() {
         className="flex-1 bg-[#141414] px-4 py-4"
         showsVerticalScrollIndicator={false}
       >
-        <Text className="mb-5 text-3xl font-bold text-white">Saved</Text>
-        {renderMediaSection(
+        <Text className="mb-5 text-3xl font-bold text-white">Watchlist</Text>
+        {renderSection(
           "Movies",
-          savedItems.filter((item) => item.media_type === "movie"),
+          watchlistItems.filter((item) => item.media_type === "movie"),
         )}
-        {renderMediaSection(
+        {renderSection(
           "TV Shows",
-          savedItems.filter((item) => item.media_type === "tv"),
+          watchlistItems.filter((item) => item.media_type === "tv"),
         )}
       </ScrollView>
       {toastMessage && (

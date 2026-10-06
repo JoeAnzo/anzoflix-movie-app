@@ -160,7 +160,7 @@ const DetailsScreen = () => {
 
   if (isLoadingDetails || isLoadingSimilar) {
     return (
-      <View className="p-2 flex-1 bg-black gap-2">
+      <View className="p-2 flex-1 bg-[#141414] gap-2">
         <View className="flex-row items-center justify-between py-2">
           <View className="flex-row items-center gap-2">
             <TouchableOpacity onPress={() => router.back()} activeOpacity={0.7}>
@@ -170,7 +170,7 @@ const DetailsScreen = () => {
           </View>
 
           <TouchableOpacity
-            onPress={() => router.push("/(tabs)/profile")}
+            onPress={() => router.push("/profile")}
             activeOpacity={0.7}
             accessibilityRole="button"
             accessibilityLabel="Go to profile"
@@ -251,23 +251,23 @@ const DetailsScreen = () => {
   }
 
   return (
-    <View className="p-2 flex-1 bg-black gap-2">
+    <View className="p-2 flex-1 bg-[#141414] gap-2">
       <View className="flex-row items-center justify-between py-2">
-      <View className="flex-row items-center gap-2">
-        <TouchableOpacity onPress={() => router.back()} activeOpacity={0.7}>
-          <Ionicons name="arrow-back" size={24} color="white" />
+        <View className="flex-row items-center gap-2">
+          <TouchableOpacity onPress={() => router.back()} activeOpacity={0.7}>
+            <Ionicons name="arrow-back" size={24} color="white" />
+          </TouchableOpacity>
+          <Logo />
+        </View>
+        <TouchableOpacity
+          onPress={() => router.push("/profile")}
+          activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="Go to profile"
+          className="h-10 w-10 items-center justify-center"
+        >
+          <Ionicons name="person-circle-outline" size={26} color="white" />
         </TouchableOpacity>
-        <Logo />
-      </View>
-      <TouchableOpacity
-        onPress={() => router.push("/(tabs)/profile")}
-        activeOpacity={0.7}
-        accessibilityRole="button"
-        accessibilityLabel="Go to profile"
-        className="h-10 w-10 items-center justify-center"
-      >
-        <Ionicons name="person-circle-outline" size={26} color="white" />
-      </TouchableOpacity>
       </View>
       <Search />
       <View className="relative flex-1">
@@ -278,9 +278,9 @@ const DetailsScreen = () => {
             className="overflow-hidden rounded-md"
             imageStyle={{ opacity: 0.92 }}
           >
-            <View className="absolute inset-0 bg-black/25" />
+            <View className="absolute inset-0 bg-[#141414]/25" />
 
-            <View className="absolute bottom-0 left-0 right-0 bg-black/75 px-4 pb-5 pt-10">
+            <View className="absolute bottom-0 left-0 right-0 bg-[#141414]/75 px-4 pb-5 pt-10">
               <View className="mb-4 flex-row gap-6">
                 <TouchableOpacity
                   className="items-center"
@@ -450,14 +450,14 @@ const DetailsScreen = () => {
                 {
                   translateY: toastAnim.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [-18, 0],
+                    outputRange: [-48, 0],
                   }),
                 },
               ],
               elevation: 50,
               zIndex: 50,
             }}
-            className="absolute left-4 right-4 top-2 z-50 rounded-2xl border border-white/10 bg-[#18181b] px-4 py-3"
+            className="absolute left-4 right-4 top-2 z-50 rounded-2xl border border-zinc-500 bg-zinc-700 px-4 py-3"
           >
             <Text className="text-center text-sm font-semibold text-white">
               {toastMessage}

@@ -55,9 +55,10 @@ const Search = () => {
         <TextInput
           value={query}
           onChangeText={setQuery}
-          className="p-2.5 text-black flex-1 bg-white rounded-md"
+          className="p-2.5 flex-1 rounded-md"
           placeholder="Search movies here and tv series"
-          placeholderTextColor="#888"
+          placeholderTextColor="#cbd5e1"
+          style={{ backgroundColor: "rgba(51, 51, 51, 0.8)", color: "#fff" }}
         />
         <Ionicons name="search" size={24} color="white" />
       </View>

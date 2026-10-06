@@ -2,8 +2,8 @@ import GoogleIcon from "@/app/components/GoogleIcon";
 import Logo from "@/app/components/Logo";
 import { normalizeAuthError } from "@/app/helpers/AuthErrorNormalizer";
 import {
-  useGoogleAuthMutation,
-  useSignUpMutation,
+    useGoogleAuthMutation,
+    useSignUpMutation,
 } from "@/app/hooks/useAuthMutation";
 import { SignUpInput, signUpSchema } from "@/app/schemas/auth.schema";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,12 +12,12 @@ import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
-  ActivityIndicator,
-  ImageBackground,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    ActivityIndicator,
+    ImageBackground,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from "react-native";
 
 export default function SignUpScreen() {
@@ -59,7 +59,7 @@ export default function SignUpScreen() {
       className="flex-1"
     >
       {/* Darkens the bright curtain lights while keeping the cinema visible. */}
-      <View className="absolute inset-0 bg-black/55" />
+      <View className="absolute inset-0 bg-[#141414]/55" />
 
       <View className="flex-1 justify-center p-6">
         <View className="mb-4 items-center justify-center">
@@ -77,11 +77,10 @@ export default function SignUpScreen() {
             name="email"
             render={({ field: { onChange, onBlur, value } }) => (
               <View
-                className={`flex-row items-center h-12 border rounded-lg px-3 bg-white ${
-                  errors.email
-                    ? "border-red-500 bg-red-50/30"
-                    : "border-slate-300"
+                className={`flex-row items-center h-12 border rounded-lg px-3 ${
+                  errors.email ? "border-red-500" : "border-slate-300"
                 }`}
+                style={{ backgroundColor: "rgba(51, 51, 51, 0.8)" }}
               >
                 <Ionicons
                   name="mail-outline"
@@ -90,9 +89,10 @@ export default function SignUpScreen() {
                   className="mr-2"
                 />
                 <TextInput
-                  className="flex-1 h-full text-base text-slate-800"
+                  className="flex-1 h-full text-base"
                   placeholder="Email Address"
-                  placeholderTextColor="#94a3b8"
+                  placeholderTextColor="#cbd5e1"
+                  style={{ color: "#fff", backgroundColor: "transparent" }}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -117,11 +117,10 @@ export default function SignUpScreen() {
             name="password"
             render={({ field: { onChange, onBlur, value } }) => (
               <View
-                className={`flex-row items-center h-12 border rounded-lg px-3 bg-white ${
-                  errors.password
-                    ? "border-red-500 bg-red-50/30"
-                    : "border-slate-300"
+                className={`flex-row items-center h-12 border rounded-lg px-3 ${
+                  errors.password ? "border-red-500" : "border-slate-300"
                 }`}
+                style={{ backgroundColor: "rgba(51, 51, 51, 0.8)" }}
               >
                 <Ionicons
                   name="lock-closed-outline"
@@ -130,9 +129,10 @@ export default function SignUpScreen() {
                   className="mr-2"
                 />
                 <TextInput
-                  className="flex-1 h-full text-base text-slate-800"
+                  className="flex-1 h-full text-base"
                   placeholder="Password"
-                  placeholderTextColor="#94a3b8"
+                  placeholderTextColor="#cbd5e1"
+                  style={{ color: "#fff", backgroundColor: "transparent" }}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -167,11 +167,10 @@ export default function SignUpScreen() {
             name="confirmPassword"
             render={({ field: { onChange, onBlur, value } }) => (
               <View
-                className={`flex-row items-center h-12 border rounded-lg px-3 bg-white ${
-                  errors.confirmPassword
-                    ? "border-red-500 bg-red-50/30"
-                    : "border-slate-300"
+                className={`flex-row items-center h-12 border rounded-lg px-3 ${
+                  errors.confirmPassword ? "border-red-500" : "border-slate-300"
                 }`}
+                style={{ backgroundColor: "rgba(51, 51, 51, 0.8)" }}
               >
                 <Ionicons
                   name="lock-closed-outline"
@@ -180,9 +179,10 @@ export default function SignUpScreen() {
                   className="mr-2"
                 />
                 <TextInput
-                  className="flex-1 h-full text-base text-slate-800"
+                  className="flex-1 h-full text-base"
                   placeholder="Confirm Password"
-                  placeholderTextColor="#94a3b8"
+                  placeholderTextColor="#cbd5e1"
+                  style={{ color: "#fff", backgroundColor: "transparent" }}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}

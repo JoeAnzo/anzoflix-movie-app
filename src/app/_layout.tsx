@@ -11,8 +11,12 @@ function AppShell() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 items-center justify-center bg-black">
-        <ActivityIndicator size="large" className="text-red-600 scale-150" />
+      <View className="flex-1 items-center justify-center bg-[#141414]">
+        <ActivityIndicator
+          size="large"
+          color="#E50914"
+          className="text-[#E50914] scale-150"
+        />
       </View>
     );
   }
@@ -21,6 +25,7 @@ function AppShell() {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="profile" options={{ headerShown: false }} />
       <Stack.Screen name="details/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="watch/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
