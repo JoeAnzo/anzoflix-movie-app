@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "movie-box-clone",
-    "slug": "movie-box-clone",
+    "name": "AnzoFlix",
+    "slug": "anzoflix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "movieboxclone",
+    "scheme": "anzoflix",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon",
-      "bundleIdentifier": "com.anzovulejoel.movieboxclone"
+      "bundleIdentifier": "com.anzovulejoel.anzoflix"
     },
     "android": {
       "package": "com.anzovulejoel.movieboxclone",

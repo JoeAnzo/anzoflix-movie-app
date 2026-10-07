@@ -5,14 +5,14 @@ import CardSection from "../components/CardSection";
 import Logo from "../components/Logo";
 import Search from "../components/Search";
 import {
-  airingTodayShows,
-  nowPlayingMovies,
-  onTheAirShows,
-  popularMovies,
-  popularTvShows,
-  topRatedMovies,
-  topRatedTv,
-  upcomingMovies,
+    airingTodayShows,
+    nowPlayingMovies,
+    onTheAirShows,
+    popularMovies,
+    popularTvShows,
+    topRatedMovies,
+    topRatedTv,
+    upcomingMovies,
 } from "../services/api";
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <View className="bg-[#141414] flex-1 p-2">
-      <View className="p-2">
+      <View className="gap-2">
         <View className="flex-row items-center justify-between py-2">
           <View className="flex-row items-center gap-2">
             <Logo />

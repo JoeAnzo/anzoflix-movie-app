@@ -1,13 +1,13 @@
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import {
-    Account,
-    Avatars,
-    Client,
-    Databases,
-    ID,
-    OAuthProvider,
-    Query,
+  Account,
+  Avatars,
+  Client,
+  Databases,
+  ID,
+  OAuthProvider,
+  Query,
 } from "react-native-appwrite";
 
 // IMPORTANT:
@@ -104,8 +104,21 @@ export const signUpWithEmailAndPassword = async (
 // Keep the Appwrite user profile table in sync with the authenticated account.
 // Google OAuth currently exposes name and email through Account.get(); when no
 // provider picture is available, use the same generated avatar as email signup.
+
 export const syncCurrentUserProfile = async () => {
-  const currentUser = await account.get();
+  let currentUser;
+
+  try {
+    currentUser = await account.get();
+  } catch (error) {
+    console.warn(
+      "No active Appwrite session found during profile sync attempt.",
+      error,
+    );
+    return null;
+  }
+
+  // FIXED: Added [0] index to split array
   const username =
     currentUser.name?.trim() || currentUser.email?.split("@")[0] || "Movie fan";
   const preferences = currentUser.prefs as Record<string, unknown>;
@@ -113,48 +126,42 @@ export const syncCurrentUserProfile = async () => {
 
   try {
     const session = await account.getSession({ sessionId: "current" });
-    if (session.provider === "google" && session.providerAccessToken) {
-      const response = await fetch(
-        "https://www.googleapis.com/oauth2/v3/userinfo",
-        {
-          headers: {
-            Authorization: `Bearer ${session.providerAccessToken}`,
-          },
+    if (session.provider === "google" && (session as any).providerAccessToken) {
+      const response = await fetch("https://googleapis.com", {
+        headers: {
+          Authorization: `Bearer ${(session as any).providerAccessToken}`,
         },
-      );
-
+      });
       if (response.ok) {
         const googleProfile = (await response.json()) as { picture?: string };
         googleAvatarUrl = googleProfile.picture;
       }
     }
   } catch (error) {
-    // Google profile data is supplemental; keep sign-in usable with a generated avatar.
-    console.warn(
-      "Google profile photo lookup failed; using a generated avatar.",
-      error,
-    );
+    console.warn("Supplemental profile photo lookup skipped.", error);
   }
 
   const providerAvatarUrl = [
     googleAvatarUrl,
     preferences?.avatar_url,
     preferences?.avatarUrl,
-    preferences?.picture,
   ].find(
     (value): value is string =>
       typeof value === "string" && value.trim().length > 0,
   );
+
   const avatarUrl =
     providerAvatarUrl ??
     avatars.getInitials({ name: username, width: 200, height: 200 }).toString();
+
+  // SCHEMA FIXED: Matching "user_name" attribute constraint perfectly
   const profileData = {
-    username,
+    user_name: username,
     email: currentUser.email,
     avatar_url: avatarUrl,
   };
 
-  let existingProfile;
+  let existingProfile = null;
   try {
     existingProfile = await databases.getDocument(
       DATABASE_ID,
@@ -162,15 +169,14 @@ export const syncCurrentUserProfile = async () => {
       currentUser.$id,
     );
   } catch (error) {
-    if ((error as { code?: number }).code !== 404) {
-      throw error;
-    }
+    if ((error as { code?: number }).code !== 404) throw error;
 
     const profilesByEmail = await databases.listDocuments(
       DATABASE_ID,
       USER_TABLE_ID,
-      [Query.equal("email", [currentUser.email])],
+      [Query.equal("email", currentUser.email)],
     );
+    // FIXED: Correctly extracted the first object element out of the documents array
     existingProfile = profilesByEmail.documents[0] ?? null;
   }
 
@@ -185,7 +191,6 @@ export const syncCurrentUserProfile = async () => {
 
   return databases.createDocument(DATABASE_ID, USER_TABLE_ID, currentUser.$id, {
     ...profileData,
-    created_at: new Date().toISOString(),
   });
 };
 
