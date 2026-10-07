@@ -141,18 +141,18 @@ export const resolvePlaybackSource = async (
   contentId: string,
   options: PlaybackOptions = {}
 ): Promise<string | null> => {
-  const resolverUrl = process.env.EXPO_PUBLIC_PLAYBACK_API_URL || "https://vidsrc.mov";
+  const resolverUrl = process.env.EXPO_PUBLIC_PLAYBACK_API_URL || "https://vidlink.pro";
   const cleanBase = resolverUrl.replace(/\/\$/, "");
 
   // Build the correct URL path pattern required by VidCore
   let path = "";
   if (mediaType === "movie") {
-    path = `/embed/movie/${contentId}`;
+    path = `/movie/${contentId}`;
   } else {
     // If it's a series and parameters aren't provided yet, default to season 1 episode 1
     const season = options.season ?? 1;
     const episode = options.episode ?? 1;
-    path = `/embed/tv/${contentId}/${season}/${episode}`;
+    path = `tv/${contentId}/${season}/${episode}`;
   }
 
   const finalUrl = `${cleanBase}${path}`;
