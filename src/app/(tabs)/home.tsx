@@ -25,7 +25,6 @@ const Home = () => {
           <View className="flex-row items-center gap-2">
             <Logo />
           </View>
-
           <TouchableOpacity
             onPress={() => router.push("/profile")}
             activeOpacity={0.7}
@@ -36,7 +35,7 @@ const Home = () => {
             <Ionicons name="person-circle-outline" size={26} color="white" />
           </TouchableOpacity>
         </View>
-        <Search />
+        <Search screen="home" placeholder="Search movies here and tv series" />
       </View>
 
       <ScrollView className="bg-[#141414]" showsVerticalScrollIndicator={false}>

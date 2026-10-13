@@ -2,36 +2,35 @@ import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
-  Alert,
-  Animated,
-  Dimensions,
-  FlatList,
-  Image,
-  ImageBackground,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
+    Alert,
+    Animated,
+    Dimensions,
+    FlatList,
+    Image,
+    ImageBackground,
+    ScrollView,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import CardSection from "../components/CardSection";
-import Logo from "../components/Logo";
-import Search from "../components/Search";
-import VideoPlayer from "../components/videoPlayer";
-import { useContent } from "../hooks/useContent";
+import CardSection from "../../components/CardSection";
+import Logo from "../../components/Logo";
+import Search from "../../components/Search";
+import VideoPlayer from "../../components/videoPlayer";
+import { useContent } from "../../hooks/useContent";
 import {
-  fetchMovieDetails,
-  fetchSimilarMovies,
-  fetchSimilarTvs,
-  fetchTvDetails,
-} from "../services/api";
+    fetchMovieDetails,
+    fetchSimilarMovies,
+    fetchSimilarTvs,
+    fetchTvDetails,
+} from "../../services/api";
 import {
-  isMovieOnWatchlist,
-  isMovieSaved,
-  toggleMovieWatchlist,
-  toggleSaveMovie,
-} from "../services/appwrite";
-import { formatRuntime } from "../utils/utils";
+    isMovieOnWatchlist,
+    isMovieSaved,
+    toggleMovieWatchlist,
+    toggleSaveMovie,
+} from "../../services/appwrite";
+import { formatRuntime } from "../../utils/utils";
 
 const DetailsScreen = () => {
   const router = useRouter();
@@ -161,7 +160,7 @@ const DetailsScreen = () => {
 
   if (isLoadingDetails || isLoadingSimilar) {
     return (
-      <SafeAreaView className="flex-1 bg-[#141414]">
+      <View className="flex-1 bg-[#141414]">
         <View className="p-2 flex-1 bg-[#141414] gap-2">
           <View className="flex-row items-center justify-between py-2">
             <View className="flex-row items-center gap-2">
@@ -185,7 +184,7 @@ const DetailsScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <Search />
+          <Search screen="home" placeholder="Search movies and tv shows here" />
           <ScrollView showsVerticalScrollIndicator={false}>
             <View className="h-[560px] w-full overflow-hidden rounded-md bg-zinc-900">
               <Animated.View
@@ -230,13 +229,13 @@ const DetailsScreen = () => {
             </View>
           </ScrollView>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 
   if (detailsError || !details || similarError || !similar) {
     return (
-      <SafeAreaView className="flex-1 bg-[#141414]">
+      <View className="flex-1 bg-[#141414]">
         <View className="flex-1 items-center justify-center bg-[#141414] p-4">
           <Text className="text-xl text-center text-white">
             Something went wrong.
@@ -258,12 +257,12 @@ const DetailsScreen = () => {
             </Text>
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-[#141414]">
+    <View className="flex-1 bg-[#141414]">
       <View className="p-2 flex-1 bg-[#141414] gap-2">
         <View className="flex-row items-center justify-between py-2">
           <View className="flex-row items-center gap-2">
@@ -282,7 +281,7 @@ const DetailsScreen = () => {
             <Ionicons name="person-circle-outline" size={26} color="white" />
           </TouchableOpacity>
         </View>
-        <Search />
+        <Search screen="home" placeholder="search movies and tv shows here"/>
         <View className="relative flex-1">
           <ScrollView showsVerticalScrollIndicator={false}>
             <ImageBackground
@@ -490,7 +489,7 @@ const DetailsScreen = () => {
           )}
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

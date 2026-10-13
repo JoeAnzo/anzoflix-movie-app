@@ -3,23 +3,23 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useRef, useState } from "react";
 import {
-    ActivityIndicator,
-    Animated,
-    Image,
-    Pressable,
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Animated,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Logo from "../components/Logo";
 import Search from "../components/Search";
 import "../global.css";
 import {
-    addMovieToWatchlist,
-    getWatchlistMedia,
-    removeMovieFromWatchlist,
-    type MediaRecordType,
+  addMovieToWatchlist,
+  getWatchlistMedia,
+  removeMovieFromWatchlist,
+  type MediaRecordType,
 } from "../services/appwrite";
 
 interface WatchlistItem {
@@ -95,6 +95,8 @@ export default function WatchlistScreen() {
   const {
     data: watchlistItems = [],
     isPending,
+    isError,
+    fetchStatus,
     refetch,
   } = useQuery<WatchlistItem[]>({
     queryKey: watchlistQueryKey,
@@ -187,10 +189,81 @@ export default function WatchlistScreen() {
     </View>
   );
 
+  if (fetchStatus === "paused" || isError) {
+    return (
+      <View className="flex-1 bg-[#141414] p-4">
+        <View className="flex-row items-center justify-between py-2">
+          <View className="flex-row items-center gap-2">
+            <Logo />
+          </View>
+          <TouchableOpacity
+            onPress={() => router.push("/profile")}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel="Go to profile"
+            className="h-10 w-10 items-center justify-center"
+          >
+            <Ionicons name="person-circle-outline" size={26} color="white" />
+          </TouchableOpacity>
+        </View>
+        <View className="flex-1 items-center justify-center px-6">
+          <Ionicons name="cloud-offline-outline" size={44} color="#a1a1aa" />
+          <Text className="mt-4 text-center text-lg font-semibold text-white">
+            Couldn’t load your watchlist
+          </Text>
+          <Text className="mt-2 text-center text-sm text-zinc-400">
+            Check your internet connection and try again.
+          </Text>
+          <TouchableOpacity
+            className="mt-5 rounded-md bg-[#E50914] px-5 py-3"
+            onPress={() => void refetch()}
+            accessibilityRole="button"
+          >
+            <Text className="font-semibold text-white">Try again</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
   if (isPending) {
     return (
-      <View className="flex-1 items-center justify-center bg-[#141414]">
-        <ActivityIndicator color="#E50914" size="large" />
+      <View className="bg-[#141414] flex-1 p-2">
+        <View className="gap-2">
+          <View className="flex-row items-center justify-between py-2">
+            <View className="flex-row items-center gap-2">
+              <Logo />
+            </View>
+            <TouchableOpacity
+              onPress={() => router.push("/profile")}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel="Go to profile"
+              className="h-10 w-10 items-center justify-center"
+            >
+              <Ionicons name="person-circle-outline" size={26} color="white" />
+            </TouchableOpacity>
+          </View>
+          <Search
+            screen="watchlist"
+            placeholder="search watchlist movies and tv shows here"
+          />
+        </View>
+        <ScrollView
+          className="bg-[#141414]"
+          showsVerticalScrollIndicator={false}
+        >
+          <View className="p-2 gap-4">
+            <Text className="text-white text-2xl">Watchlist</Text>
+            <View className="flex-1 items-center justify-center bg-[#141414]">
+              <ActivityIndicator
+                color="#E50914"
+                size="large"
+                className="text-[#E50914] scale-150"
+              />
+            </View>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -218,7 +291,10 @@ export default function WatchlistScreen() {
             <Ionicons name="person-circle-outline" size={26} color="white" />
           </TouchableOpacity>
         </View>
-        <Search />
+        <Search
+          screen="watchlist"
+          placeholder="search watchlist movies and tv shows here"
+        />
       </View>
       <ScrollView
         className="flex-1 bg-[#141414] px-4 py-4"

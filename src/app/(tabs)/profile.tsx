@@ -1,6 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
+import { fetchAvailableLanguages } from "../services/api";
+
+
 import {
   ActivityIndicator,
   Alert,
@@ -16,6 +19,8 @@ import { useApp } from "../context/AppContext";
 import "../global.css";
 import { getUserProfile } from "../services/appwrite";
 import ProfileRow from "../components/ProfileRow";
+import { useContent } from "../hooks/useContent";
+
 
 type ProfileData = {
   username?: string;
@@ -25,8 +30,11 @@ type ProfileData = {
 
 
 
-
 function SectionLabel({ children }: { children: string }) {
+
+  const {data} = useContent(['language'],fetchAvailableLanguages)
+  console.log(data)
+
   return (
     <Text className="mb-3 ml-1 text-xs font-bold uppercase tracking-[2px] text-white">
       {children}

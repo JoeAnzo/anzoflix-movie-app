@@ -1,13 +1,13 @@
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import {
-  Account,
-  Avatars,
-  Client,
-  Databases,
-  ID,
-  OAuthProvider,
-  Query,
+    Account,
+    Avatars,
+    Client,
+    Databases,
+    ID,
+    OAuthProvider,
+    Query,
 } from "react-native-appwrite";
 
 // IMPORTANT:
@@ -29,16 +29,25 @@ export const account = new Account(client);
 const databases = new Databases(client);
 const avatars = new Avatars(client);
 
+const isUnauthorizedError = (error: unknown) =>
+  typeof error === "object" &&
+  error !== null &&
+  "code" in error &&
+  error.code === 401;
+
 // This function is the startup check for a saved session.
 // The app calls this during bootstrap to decide whether a user is still authenticated.
 export const getCurrentUser = async () => {
   try {
     return await account.get();
   } catch (error) {
-    // Appwrite throws when there is no valid session.
-    // We treat that as a normal logged-out state instead of crashing the app.
-    console.warn("No Appwrite session found during auth bootstrap.", error);
-    return null;
+    // A 401 means Appwrite confirmed there is no valid session. Other failures
+    // (such as a network outage) must not be mistaken for a signed-out user.
+    if (isUnauthorizedError(error)) {
+      return null;
+    }
+
+    throw error;
   }
 };
 
@@ -105,19 +114,9 @@ export const signUpWithEmailAndPassword = async (
 // Google OAuth currently exposes name and email through Account.get(); when no
 // provider picture is available, use the same generated avatar as email signup.
 
-export const syncCurrentUserProfile = async () => {
-  let currentUser;
-
-  try {
-    currentUser = await account.get();
-  } catch (error) {
-    console.warn(
-      "No active Appwrite session found during profile sync attempt.",
-      error,
-    );
-    return null;
-  }
-
+export const syncCurrentUserProfile = async (
+  currentUser: Awaited<ReturnType<typeof account.get>>,
+) => {
   // FIXED: Added [0] index to split array
   const username =
     currentUser.name?.trim() || currentUser.email?.split("@")[0] || "Movie fan";
@@ -161,37 +160,30 @@ export const syncCurrentUserProfile = async () => {
     avatar_url: avatarUrl,
   };
 
-  let existingProfile = null;
+  // Match email/password signup: use the authenticated Appwrite user ID as the
+  // profile document ID. Avoid listDocuments(email), which requires table-wide
+  // read/list permissions that signup itself does not need.
   try {
-    existingProfile = await databases.getDocument(
+    return await databases.createDocument(
       DATABASE_ID,
       USER_TABLE_ID,
       currentUser.$id,
+      profileData,
     );
   } catch (error) {
-    if ((error as { code?: number }).code !== 404) throw error;
+    // A conflict means this user already has a profile document from an earlier
+    // Google sign-in. Update it instead of creating a duplicate or listing rows.
+    if ((error as { code?: number }).code !== 409) {
+      throw error;
+    }
 
-    const profilesByEmail = await databases.listDocuments(
-      DATABASE_ID,
-      USER_TABLE_ID,
-      [Query.equal("email", currentUser.email)],
-    );
-    // FIXED: Correctly extracted the first object element out of the documents array
-    existingProfile = profilesByEmail.documents[0] ?? null;
-  }
-
-  if (existingProfile) {
     return databases.updateDocument(
       DATABASE_ID,
       USER_TABLE_ID,
-      existingProfile.$id,
+      currentUser.$id,
       profileData,
     );
   }
-
-  return databases.createDocument(DATABASE_ID, USER_TABLE_ID, currentUser.$id, {
-    ...profileData,
-  });
 };
 
 export const getUserProfile = async () => {
@@ -520,7 +512,7 @@ export const getSavedMedia = async () => {
     return response.documents;
   } catch (error) {
     console.error("Appwrite saved-media fetch failed:", error);
-    return [];
+    throw error;
   }
 };
 
@@ -545,7 +537,7 @@ export const getWatchlistMediaByType = async (mediaType: MediaRecordType) => {
     return response.documents;
   } catch (error) {
     console.error("Appwrite watchlist fetch failed:", error);
-    return [];
+    throw error;
   }
 };
 
@@ -569,7 +561,7 @@ export const getWatchlistMedia = async () => {
     return response.documents;
   } catch (error) {
     console.error("Appwrite watchlist-media fetch failed:", error);
-    return [];
+    throw error;
   }
 };
 
@@ -646,14 +638,25 @@ export const authenticateWithGoogle = async () => {
     }
 
     // This is the modern object-style Appwrite session creation signature.
-    const session = await account.createSession({
+    await account.createSession({
       userId,
       secret,
     });
 
-    await syncCurrentUserProfile();
+    const currentUser = await account.get();
 
-    return session;
+    // Profile persistence is ancillary to authentication. A permissions/schema
+    // issue here must not make a successful Google sign-in appear to fail.
+    try {
+      await syncCurrentUserProfile(currentUser);
+    } catch (profileError) {
+      console.warn(
+        "Google sign-in succeeded, but writing the user profile document failed.",
+        profileError,
+      );
+    }
+
+    return currentUser;
   } catch (error) {
     console.error("Google Auth Action Core Exception:", error);
     throw error;

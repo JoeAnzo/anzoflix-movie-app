@@ -2,34 +2,41 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    FlatList,
-    Image,
-    Pressable,
-    Text,
-    TextInput,
-    View,
+  FlatList,
+  Image,
+  Pressable,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 import { useContent } from "../hooks/useContent";
 import { useDebounce } from "../hooks/useDedounce";
 import { searchContent } from "../services/api";
 
-const Search = () => {
+interface SearchProps {
+  screen: "home" | "category" | "watchlist" | "saved";
+  placeholder: string;
+}
+
+const Search = ({ screen, placeholder }: SearchProps) => {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 400);
 
-  const { data: searchResults = [], isLoading } = useContent(
-    ["search", debouncedQuery],
-    () => {
-      const cleanedQuery = debouncedQuery.trim();
+  const {
+    data: searchResults = [],
+    isFetching,
+    isError,
+    refetch,
+  } = useContent(["search", debouncedQuery], () => {
+    const cleanedQuery = debouncedQuery.trim();
 
-      if (!cleanedQuery) {
-        return Promise.resolve({ success: true, data: { results: [] } });
-      }
+    if (!cleanedQuery) {
+      return Promise.resolve({ success: true, data: { results: [] } });
+    }
 
-      return searchContent(cleanedQuery, 1);
-    },
-  );
+    return searchContent(cleanedQuery, 1);
+  });
 
   const filteredResults = (Array.isArray(searchResults) ? searchResults : [])
     .filter((item) => item.media_type === "movie" || item.media_type === "tv")
@@ -56,7 +63,7 @@ const Search = () => {
           value={query}
           onChangeText={setQuery}
           className="p-2.5 flex-1 rounded-md"
-          placeholder="Search movies here and tv series"
+          placeholder={placeholder}
           placeholderTextColor="#cbd5e1"
           style={{ backgroundColor: "rgba(51, 51, 51, 0.8)", color: "#fff" }}
         />
@@ -68,8 +75,24 @@ const Search = () => {
           className="absolute left-0 right-0 top-12 z-50 mt-2 rounded-md bg-zinc-900 border border-zinc-800 overflow-hidden"
           style={{ elevation: 21 }}
         >
-          {isLoading ? (
+          {isFetching ? (
             <Text className="p-3 text-zinc-400">Searching...</Text>
+          ) : isError ? (
+            <View className="flex-row items-center justify-between gap-3 p-3">
+              <Text className="flex-1 text-sm text-zinc-400">
+                Couldn’t load results. Check your connection and try again.
+              </Text>
+              <Pressable
+                onPress={() => void refetch()}
+                disabled={isFetching}
+                accessibilityRole="button"
+                accessibilityLabel="Retry search"
+                accessibilityHint="Fetch search results again"
+                className="h-9 w-9 items-center justify-center rounded-full bg-zinc-800"
+              >
+                <Ionicons name="refresh" size={20} color="white" />
+              </Pressable>
+            </View>
           ) : filteredResults.length > 0 ? (
             <FlatList
               data={filteredResults}

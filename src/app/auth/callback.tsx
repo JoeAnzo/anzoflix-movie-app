@@ -25,10 +25,18 @@ export default function AuthCallback() {
           // 2. Short non-blocking pause to allow Appwrite client memory to bootstrap the session state
           await new Promise((resolve) => setTimeout(resolve, 800));
 
-          // 3. Sync profile safely
-          await syncCurrentUserProfile();
+          // Profile sync is optional; do not block navigation after session creation.
+          try {
+            const currentUser = await account.get();
+            await syncCurrentUserProfile(currentUser);
+          } catch (profileError) {
+            console.warn(
+              "OAuth session created, but writing the user profile document failed.",
+              profileError,
+            );
+          }
 
-          // 4. Clean navigation away from callback route
+          // Navigate once the Appwrite session has been created.
           router.replace("/(tabs)/home");
         } catch (error) {
           console.error("Synchronized Session Initialization Failed:", error);
@@ -43,7 +51,14 @@ export default function AuthCallback() {
   }, [params, router]);
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#141414" }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#141414",
+      }}
+    >
       <ActivityIndicator size="large" color="#E50914" />
     </View>
   );

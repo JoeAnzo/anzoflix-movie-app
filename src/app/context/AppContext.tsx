@@ -1,14 +1,14 @@
 import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
+    type ReactNode,
 } from "react";
 import {
-  getCurrentUser,
-  logout as logoutFromAppwrite,
+    getCurrentUser,
+    logout as logoutFromAppwrite,
 } from "../services/appwrite";
 
 // This context owns the app's auth state.
@@ -27,6 +27,7 @@ interface AppContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
+  authError: string | null;
   bootstrapAuth: () => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -38,20 +39,24 @@ export const AppContextProvider = ({ children }: AppProviderProps) => {
   const [user, setUser] = useState<AppUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   // This is the auth bootstrap step.
   // It runs on app start and asks Appwrite whether a valid saved session exists.
   const bootstrapAuth = useCallback(async () => {
     setIsLoading(true);
+    setAuthError(null);
 
     try {
       const currentUser = await getCurrentUser();
       setUser(currentUser);
       setIsAuthenticated(Boolean(currentUser));
+      setAuthError(null);
     } catch (error) {
       console.error("Auth bootstrap failed:", error);
-      setUser(null);
-      setIsAuthenticated(false);
+      setAuthError(
+        "We couldn’t verify your session. Check your connection and try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -69,13 +74,13 @@ export const AppContextProvider = ({ children }: AppProviderProps) => {
     }
   }, []);
 
-  // This runs automatically once when the provider mounts.
-  // The async work is wrapped in a callback so the effect does not synchronously call setState.
+  // Check the persisted Appwrite session once when the provider mounts.
   useEffect(() => {
     let isMounted = true;
 
     const runBootstrap = async () => {
       setIsLoading(true);
+      setAuthError(null);
 
       try {
         const currentUser = await getCurrentUser();
@@ -86,12 +91,14 @@ export const AppContextProvider = ({ children }: AppProviderProps) => {
 
         setUser(currentUser);
         setIsAuthenticated(Boolean(currentUser));
+        setAuthError(null);
       } catch (error) {
         console.error("Auth bootstrap failed:", error);
 
         if (isMounted) {
-          setUser(null);
-          setIsAuthenticated(false);
+          setAuthError(
+            "We couldn’t verify your session. Check your connection and try again.",
+          );
         }
       } finally {
         if (isMounted) {
@@ -117,6 +124,7 @@ export const AppContextProvider = ({ children }: AppProviderProps) => {
         isAuthenticated,
         setIsAuthenticated,
         isLoading,
+        authError,
         bootstrapAuth,
         logout,
       }}

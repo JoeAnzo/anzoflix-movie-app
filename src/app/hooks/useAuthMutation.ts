@@ -56,10 +56,9 @@ export const useGoogleAuthMutation = (onSuccessCallback?: () => void) => {
 
   return useMutation({
     mutationFn: authenticateWithGoogle,
-    onSuccess: async () => {
-      const currentUser = await getCurrentUser();
+    onSuccess: (currentUser) => {
       setUser(currentUser);
-      setIsAuthenticated(Boolean(currentUser));
+      setIsAuthenticated(true);
 
       if (onSuccessCallback) {
         onSuccessCallback();
