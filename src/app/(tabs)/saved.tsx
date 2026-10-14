@@ -177,13 +177,6 @@ export default function SavedScreen() {
   };
 
   const renderMediaSection = (title: string, items: SavedItem[]) => (
-    <View className="mb-6">
-      <Text className="mb-3 text-xl font-bold text-white">{title}</Text>
-      {items.length === 0 ? (
-        <Text className="text-sm text-zinc-400">
-          No saved {title.toLowerCase()} yet.
-        </Text>
-      ) : (
         <View className="flex-row flex-wrap" style={{ gap: 12 }}>
           {items.map((item) => (
             <SavedMediaCard
@@ -193,8 +186,6 @@ export default function SavedScreen() {
             />
           ))}
         </View>
-      )}
-    </View>
   );
 
   if (fetchStatus === "paused" || isError) {
@@ -217,7 +208,7 @@ export default function SavedScreen() {
         <View className="flex-1 items-center justify-center px-6">
           <Ionicons name="cloud-offline-outline" size={44} color="#a1a1aa" />
           <Text className="mt-4 text-center text-lg font-semibold text-white">
-            Couldn’t load your saved titles
+            Couldnt load your saved titles
           </Text>
           <Text className="mt-2 text-center text-sm text-zinc-400">
             Check your internet connection and try again.
@@ -261,7 +252,8 @@ export default function SavedScreen() {
           Saved Movies and TV Shows
         </Text>
         <ScrollView
-          className="bg-[#141414] flex-1 items-center justify-center"
+          contentContainerClassName="flex-1 items-center justify-center"
+          className="bg-[#141414]"
           showsVerticalScrollIndicator={false}
         >
           <View className="p-2 gap-4">
@@ -308,18 +300,38 @@ export default function SavedScreen() {
         />
       </View>
       <ScrollView
-        className="flex-1 bg-[#141414] px-4 py-4"
+        className="bg-[#141414] px-4 py-4 flex-1"
+        contentContainerClassName="flex-1"
         showsVerticalScrollIndicator={false}
-      >
-        <Text className="mb-5 text-3xl font-bold text-white">Saved</Text>
-        {renderMediaSection(
-          "Movies",
-          savedItems.filter((item) => item.media_type === "movie"),
-        )}
-        {renderMediaSection(
-          "TV Shows",
-          savedItems.filter((item) => item.media_type === "tv"),
-        )}
+      >   
+        <Text className="mb-5 text-md font-bold text-white">Saved Movies and TV Shows</Text>
+      
+           {
+          savedItems.length === 0 ? (
+            <View className="flex-1 items-center h-full justify-center">
+              <Text className="text-sm text-zinc-400">
+                No saved movies or TV shows yet
+              </Text>
+            </View>
+          ) : 
+          (
+          <>
+          {
+            renderMediaSection(
+            "Movies",
+            savedItems.filter((item) => item.media_type === "movie"),
+            )
+          }
+          {
+            renderMediaSection(
+            "TV Shows",
+            savedItems.filter((item) => item.media_type === "tv"),
+          )
+          }
+          </>
+          )
+        }
+
       </ScrollView>
       {toastMessage && (
         <Animated.View

@@ -75,31 +75,31 @@ export default function MoviePlayer({ sourceUrl }: MoviePlayerProps) {
         startInLoadingState
         
         // Connect Layer 1 Protection
-        injectedJavaScript={adBlockerScript}
+        //injectedJavaScript={adBlockerScript}
         
         // 3. Ad Blocker Layer #2: Navigation & Redirect Interception
         // Catches malicious link requests immediately if a browser script evades Layer 1.
-        onShouldStartLoadWithRequest={(request) => {
-          const targetUrl = request.url;
+        // onShouldStartLoadWithRequest={(request) => {
+        //   const targetUrl = request.url;
 
-          // Allow low-level browser initialization layers
-          if (targetUrl === "about:blank" || targetUrl === "about:srcdoc") {
-            return true;
-          }
+        //   // Allow low-level browser initialization layers
+        //   if (targetUrl === "about:blank" || targetUrl === "about:srcdoc") {
+        //     return true;
+        //   }
 
-          // Whitelist: Only let the WebView connect to safe streaming structural assets
-          if (
-            targetUrl === sourceUrl || 
-            targetUrl.includes("vidcore") || 
-            targetUrl.includes("vidcor") || 
-            request.mainDocumentURL?.includes("vidcore")
-          ) {
-            return true; 
-          }
+        //   // Whitelist: Only let the WebView connect to safe streaming structural assets
+        //   if (
+        //     targetUrl === sourceUrl || 
+        //     targetUrl.includes("vidcore") || 
+        //     targetUrl.includes("vidcor") || 
+        //     request.mainDocumentURL?.includes("vidcore")
+        //   ) {
+        //     return true; 
+        //   }
           
-          // Drop and block any background reroutes, tracking clicks, or external adult URLs
-          return false; 
-        }}
+        //   // Drop and block any background reroutes, tracking clicks, or external adult URLs
+        //   return false; 
+        // }}
       />
     </View>
   );
