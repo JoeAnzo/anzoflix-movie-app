@@ -248,7 +248,7 @@ export default function SavedScreen() {
             placeholder="search saved movies and tv shows here"
           />
         </View>
-        <Text className="text-white text-2xl">
+        <Text className="mb-5 text-lg font-bold text-white py-4">
           Saved Movies and TV Shows
         </Text>
         <ScrollView
@@ -304,7 +304,7 @@ export default function SavedScreen() {
         contentContainerClassName="flex-1"
         showsVerticalScrollIndicator={false}
       >   
-        <Text className="mb-5 text-md font-bold text-white">Saved Movies and TV Shows</Text>
+        <Text className="mb-5 text-lg font-bold text-white">Saved Movies and TV Shows</Text>
       
            {
           savedItems.length === 0 ? (

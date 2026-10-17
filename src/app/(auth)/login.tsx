@@ -50,6 +50,8 @@ export default function LoginScreen() {
   const isAnyActionPending =
     signInMutation.isPending || googleAuthMutation.isPending;
 
+  let ActiveError = signInMutation.error || googleAuthMutation.error;
+
   return (
     <ImageBackground
       source={require("../../../assets/images/cinemaHall.jpg")}
@@ -215,20 +217,12 @@ export default function LoginScreen() {
         This is the critical UI rule: never render raw backend error strings.
         We normalize the error before displaying it to the user.
       */}
-        {signInMutation.error && (
-          <View className="first:mb-4">
-            <Text className="text-red-600 text-center font-semibold text-sm">
-              {normalizeAuthError(signInMutation.error)}
-            </Text>
-          </View>
-        )}
-        {googleAuthMutation.error && (
+        {ActiveError && (
           <View className="mb-4">
             <Text className="text-red-600 text-center font-semibold text-sm">
-              {normalizeAuthError(googleAuthMutation.error)}
+              {normalizeAuthError(ActiveError)}
             </Text>
-          </View>
-        )}
+          </View>)}
       </View>
     </ImageBackground>
   );

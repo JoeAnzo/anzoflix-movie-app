@@ -12,4 +12,5 @@ export default function HomeScreen() {
   }
 
   return <Redirect href={isAuthenticated ? "/(tabs)/home" : "/(auth)/login"} />;
+
 }

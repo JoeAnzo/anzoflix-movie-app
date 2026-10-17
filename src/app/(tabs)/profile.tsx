@@ -141,7 +141,7 @@ export default function ProfileScreen() {
       >
         <View className="mb-7 flex-row items-center justify-between">
           <View>
-            <Text className="text-xs font-bold uppercase tracking-[3px] text-red-500">
+            <Text className="text-xs font-bold uppercase tracking-[3px] text-[#E50914]">
               AnzoFlix
             </Text>
             <Text className="mt-1 text-3xl font-extrabold text-white">
@@ -156,7 +156,7 @@ export default function ProfileScreen() {
         <View className="mb-8 overflow-hidden rounded-3xl border border-white/10 bg-[#18181b] p-5">
           <View className="absolute -right-10 -top-12 h-36 w-36 rounded-full bg-red-600/10" />
           <View className="flex-row items-center">
-            <View className="h-[76px] w-[76px] items-center justify-center overflow-hidden rounded-full border-2 border-red-500/70 bg-zinc-800">
+            <View className="h-[76px] w-[76px] items-center justify-center overflow-hidden rounded-full border-2 border-[#E50914] bg-zinc-800">
               {profile?.avatar_url ? (
                 <Image
                   source={{ uri: profile.avatar_url }}
@@ -195,7 +195,7 @@ export default function ProfileScreen() {
               onPress={showAccountDetails}
               className="h-9 w-9 items-center justify-center rounded-full bg-white/5"
             >
-              <Ionicons name="create-outline" size={18} color="#d4d4d8" />
+              <Ionicons name="create-outline" size={18} color="#E50914" />
             </Pressable>
           </View>
           <View className="my-5 h-px bg-white/10" />
@@ -205,12 +205,12 @@ export default function ProfileScreen() {
             className="flex-row items-center justify-between"
           >
             <View className="flex-row items-center">
-              <Ionicons name="bookmark" size={17} color="#ef4444" />
+              <Ionicons name="bookmark" size={17} color="#E50914" />
               <Text className="ml-2 text-sm font-semibold text-zinc-200">
                 Your saved titles
               </Text>
             </View>
-            <Ionicons name="arrow-forward" size={18} color="#a1a1aa" />
+            <Ionicons name="arrow-forward" size={18} color="#E50914" />
           </Pressable>
         </View>
 

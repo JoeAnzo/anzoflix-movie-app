@@ -47,6 +47,9 @@ const DetailsScreen = () => {
   const {
     data: details,
     isLoading: isLoadingDetails,
+    refetch,
+    isError,
+    fetchStatus,
     error: detailsError,
   } = useContent(["details", mediaType, id], () =>
     mediaType === "movie"
@@ -58,6 +61,7 @@ const DetailsScreen = () => {
     data: similar,
     isLoading: isLoadingSimilar,
     error: similarError,
+
   } = useContent(["similar", mediaType, id], () =>
     mediaType === "movie"
       ? fetchSimilarMovies(Number(id))
@@ -233,28 +237,37 @@ const DetailsScreen = () => {
     );
   }
 
-  if (detailsError || !details || similarError || !similar) {
+  if (fetchStatus === "paused" || isError) {
     return (
-      <View className="flex-1 bg-[#141414]">
-        <View className="flex-1 items-center justify-center bg-[#141414] p-4">
-          <Text className="text-xl text-center text-white">
-            Something went wrong.
+      <View className="flex-1 bg-[#141414] p-4">
+        <View className="flex-row items-center justify-between py-2">
+          <View className="flex-row items-center gap-2">
+            <Logo />
+          </View>
+          <TouchableOpacity
+            onPress={() => router.push("/profile")}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel="Go to profile"
+            className="h-10 w-10 items-center justify-center"
+          >
+            <Ionicons name="person-circle-outline" size={26} color="white" />
+          </TouchableOpacity>
+        </View>
+        <View className="flex-1 items-center justify-center px-6">
+          <Ionicons name="cloud-offline-outline" size={44} color="#a1a1aa" />
+          <Text className="mt-4 text-center text-lg font-semibold text-white">
+            Couldnt load your saved titles
           </Text>
-          <Text className="mt-2 text-center text-sm text-zinc-300">
-            It seems we are having
-            <br />
-            some connectivity problems
-            <br />
-            Please try again.
+          <Text className="mt-2 text-center text-sm text-zinc-400">
+            Check your internet connection and try again.
           </Text>
           <TouchableOpacity
-            onPress={() => console.log("refresh")}
-            activeOpacity={0.7}
-            className="mt-4 rounded-md bg-[#E50914] px-4 py-2"
+            className="mt-5 rounded-md bg-[#E50914] px-5 py-3"
+            onPress={() => void refetch()}
+            accessibilityRole="button"
           >
-            <Text className="text-sm font-bold uppercase text-white">
-              TRY AGAIN
-            </Text>
+            <Text className="font-semibold text-white">Try again</Text>
           </TouchableOpacity>
         </View>
       </View>

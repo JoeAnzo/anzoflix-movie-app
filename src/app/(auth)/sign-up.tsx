@@ -52,6 +52,8 @@ export default function SignUpScreen() {
   const isAnyActionPending =
     signUpMutation.isPending || googleAuthMutation.isPending;
 
+  let ActiveError = signUpMutation.error || googleAuthMutation.error;
+
   return (
     <ImageBackground
       source={require("../../../assets/images/cinemaHall.jpg")}
@@ -262,22 +264,11 @@ export default function SignUpScreen() {
             </TouchableOpacity>
           </Link>
         </View>
-        {/*
-        Keep errors user-safe: raw backend details are never shown in the UI.
-        This keeps the app professional and avoids leaking backend implementation info.
-      */}
-        {googleAuthMutation.error && (
+
+        {ActiveError && (
           <View className="mb-4">
             <Text className="text-red-600 text-center font-semibold text-sm">
-              {normalizeAuthError(googleAuthMutation.error)}
-            </Text>
-          </View>
-        )}
-        {/* Global Credentials Sign-Up Error Alert */}
-        {signUpMutation.error && (
-          <View className="mb-4">
-            <Text className="text-red-600 text-center font-semibold text-sm">
-              {normalizeAuthError(signUpMutation.error)}
+              {normalizeAuthError(ActiveError)}
             </Text>
           </View>
         )}

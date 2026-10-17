@@ -173,21 +173,13 @@ export default function WatchlistScreen() {
   };
 
   const renderSection = (title: string, items: WatchlistItem[]) => (
-    <View className="mb-6">
-      <Text className="mb-3 text-xl font-bold text-white">{title}</Text>
-      {items.length === 0 ? (
-        <Text className="text-sm text-zinc-400">
-          No {title.toLowerCase()} in your watchlist yet.
-        </Text>
-      ) : (
+   
         <View className="flex-row flex-wrap" style={{ gap: 12 }}>
           {items.map((item) => (
             <WatchlistCard key={item.$id} item={item} onDelete={handleDelete} />
           ))}
         </View>
-      )}
-    </View>
-  );
+      )
 
   if (fetchStatus === "paused" || isError) {
     return (
@@ -245,16 +237,19 @@ export default function WatchlistScreen() {
             </TouchableOpacity>
           </View>
           <Search
-            screen="watchlist"
-            placeholder="search watchlist movies and tv shows here"
+            screen="saved"
+            placeholder="search saved movies and tv shows here"
           />
         </View>
+        <Text className="mb-5 text-lg font-bold text-white py-4">
+          watchlist
+        </Text>
         <ScrollView
+          contentContainerClassName="flex-1 items-center justify-center"
           className="bg-[#141414]"
           showsVerticalScrollIndicator={false}
         >
           <View className="p-2 gap-4">
-            <Text className="text-white text-2xl">Watchlist</Text>
             <View className="flex-1 items-center justify-center bg-[#141414]">
               <ActivityIndicator
                 color="#E50914"
@@ -297,18 +292,38 @@ export default function WatchlistScreen() {
         />
       </View>
       <ScrollView
-        className="flex-1 bg-[#141414] px-4 py-4"
+        className="bg-[#141414] px-4 py-4 flex-1"
+        contentContainerClassName="flex-1"
         showsVerticalScrollIndicator={false}
-      >
-        <Text className="mb-5 text-3xl font-bold text-white">Watchlist</Text>
-        {renderSection(
-          "Movies",
-          watchlistItems.filter((item) => item.media_type === "movie"),
-        )}
-        {renderSection(
-          "TV Shows",
-          watchlistItems.filter((item) => item.media_type === "tv"),
-        )}
+      >   
+        <Text className="mb-5 text-lg font-bold text-white">Watchlist</Text>
+      
+           {
+          watchlistItems.length === 0 ? (
+            <View className="flex-1 items-center h-full justify-center">
+              <Text className="text-sm text-zinc-400">
+                No movies and TV shows in your watchlist
+              </Text>
+            </View>
+          ) : 
+          (
+          <>
+          {
+            renderSection(
+            "Movies",
+            watchlistItems.filter((item) => item.media_type === "movie"),
+            )
+          }
+          {
+            renderSection(
+            "TV Shows",
+            watchlistItems.filter((item) => item.media_type === "tv"),
+          )
+          }
+          </>
+          )
+        }
+
       </ScrollView>
       {toastMessage && (
         <Animated.View
