@@ -244,21 +244,13 @@ export default function WatchlistScreen() {
         <Text className="mb-5 text-lg font-bold text-white py-4">
           watchlist
         </Text>
-        <ScrollView
-          contentContainerClassName="flex-1 items-center justify-center"
-          className="bg-[#141414]"
-          showsVerticalScrollIndicator={false}
-        >
-          <View className="p-2 gap-4">
-            <View className="flex-1 items-center justify-center bg-[#141414]">
-              <ActivityIndicator
-                color="#E50914"
-                size="large"
-                className="text-[#E50914] scale-150"
-              />
-            </View>
-          </View>
-        </ScrollView>
+        <View className="flex-1 items-center justify-center bg-[#141414]">
+          <ActivityIndicator
+            color="#E50914"
+            size="large"
+            className="text-[#E50914] scale-150"
+          />
+        </View>
       </View>
     );
   }
@@ -293,14 +285,14 @@ export default function WatchlistScreen() {
       </View>
       <ScrollView
         className="bg-[#141414] px-4 py-4 flex-1"
-        contentContainerClassName="flex-1"
+        contentContainerClassName="flex-grow"
         showsVerticalScrollIndicator={false}
       >   
         <Text className="mb-5 text-lg font-bold text-white">Watchlist</Text>
       
            {
           watchlistItems.length === 0 ? (
-            <View className="flex-1 items-center h-full justify-center">
+            <View className="flex-1 items-center justify-center">
               <Text className="text-sm text-zinc-400">
                 No movies and TV shows in your watchlist
               </Text>

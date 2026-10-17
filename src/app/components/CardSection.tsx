@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Text, View, FlatList } from 'react-native';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useApp } from '../context/AppContext';
@@ -11,14 +12,23 @@ interface MovieSectionProps {
   fetcher?: Fetcher;
   data?: any[];
   isLoading?: boolean;
+  onInitialFetchErrorChange?: (title: string, hasError: boolean) => void;
 }
 
-const CardSection = ({ title, fetcher, data: staticData = [], isLoading: staticIsLoading = false }: MovieSectionProps) => {
+const CardSection = ({
+  title,
+  fetcher,
+  data: staticData = [],
+  isLoading: staticIsLoading = false,
+  onInitialFetchErrorChange,
+}: MovieSectionProps) => {
   const { selectedLanguage } = useApp();
 
   const {
     data,
     isLoading,
+    isError,
+    fetchStatus,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
@@ -43,6 +53,13 @@ const CardSection = ({ title, fetcher, data: staticData = [], isLoading: staticI
     },
     enabled: Boolean(fetcher),
   });
+
+  useEffect(() => {
+    onInitialFetchErrorChange?.(
+      title,
+      Boolean(fetcher && !data && (isError || fetchStatus === 'paused')),
+    );
+  }, [data, fetchStatus, fetcher, isError, onInitialFetchErrorChange, title]);
 
   const items = fetcher
     ? data?.pages.flatMap((page) => page.results ?? []) ?? []
