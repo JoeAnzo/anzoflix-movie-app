@@ -14,6 +14,7 @@ import {
     View,
 } from "react-native";
 import CardSection from "../../components/CardSection";
+import SeriesAccordion from "../../components/SeriesAccordion";
 import { formatReleaseDate,formatRating,getAgeRating } from "../../../../utils/formatters";
 import Logo from "../../components/Logo";
 import Search from "../../components/Search";
@@ -385,6 +386,20 @@ const DetailsScreen = () => {
                     {details.number_of_episodes} episodes
                   </Text>
                 )}
+                <View className="mt-4 flex-row gap-2">
+                    <View className="mt-4 flex gap-1">
+                      <Text className="text-base font-bold text-white">Rating</Text> 
+                      <Text className="text-white">{formatRating(details.vote_average)}</Text>
+                    </View>
+                    <View className="mt-4 flex gap-1">
+                      <Text className="text-base font-bold text-white">PG Rating</Text> 
+                      <Text className="text-white">{getAgeRating(details, mediaType)}</Text>
+                    </View>
+                    <View className="mt-4 flex gap-1">
+                      <Text className="text-base font-bold text-white">Release Date</Text> 
+                      <Text className="text-white">{formatReleaseDate(details.release_date || details.first_air_date)}</Text>
+                    </View>
+                </View>
                 <Text className="mt-4 text-base font-bold text-white">
                   Overview
                 </Text>
@@ -393,15 +408,6 @@ const DetailsScreen = () => {
                   numberOfLines={5}
                 >
                   {details.overview || "No overview available."}
-                </Text>
-                <Text className="mt-4 text-base font-bold text-white">
-                  Rating {formatRating(details.vote_average)}
-                </Text>
-                <Text className="mt-4 text-base font-bold text-white">
-                  PG Rating {getAgeRating(details, mediaType)}
-                </Text>
-                <Text className="mt-4 text-base font-bold text-white">
-                  Release Date {formatReleaseDate(details.release_date || details.first_air_date)}
                 </Text>
               </View>
             </ImageBackground>
@@ -464,13 +470,10 @@ const DetailsScreen = () => {
               </View>
             )}
 
-            {!isMovie && console.log(details)}
-
             {!isMovie && (
-              <CardSection
-                title="Seasons"
-                data={details.seasons}
-                isLoading={false}
+              <SeriesAccordion
+                seasons={details?.seasons ?? []}
+                seriesId={id}
               />
             )}
             {isMovie ? (
@@ -503,7 +506,7 @@ const DetailsScreen = () => {
                 elevation: 50,
                 zIndex: 50,
               }}
-              className="absolute left-4 right-4 top-2 z-50 rounded-2xl border border-zinc-500 bg-zinc-700 px-4 py-3"
+              className="absolute left-4 right-4 top-2 z-50 rounded-2xl border  rgba(51, 51, 51, 0.8) px-4 py-3"
             >
               <Text className="text-center text-sm font-semibold text-white">
                 {toastMessage}

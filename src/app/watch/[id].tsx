@@ -15,13 +15,19 @@ export default function WatchScreen() {
     id,
     mediaType: rawMediaType,
     title: rawTitle,
+    season: rawSeason,
+    episode: rawEpisode,
   } = useLocalSearchParams<{
     id: string;
     mediaType?: string;
     title?: string;
+    season?: string;
+    episode?: string;
   }>();
   const mediaType = isMediaType(rawMediaType) ? rawMediaType : null;
   const title = Array.isArray(rawTitle) ? rawTitle[0] : rawTitle;
+  const season = Array.isArray(rawSeason) ? rawSeason[0] : rawSeason;
+  const episode = Array.isArray(rawEpisode) ? rawEpisode[0] : rawEpisode;
   const [sourceUrl, setSourceUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,8 +46,32 @@ export default function WatchScreen() {
         return;
       }
 
+      const hasSeasonOrEpisode = season !== undefined || episode !== undefined;
+      const isValidEpisodeParams =
+        season !== undefined &&
+        episode !== undefined &&
+        /^\d+$/.test(season) &&
+        /^\d+$/.test(episode) &&
+        Number(season) > 0 &&
+        Number(episode) > 0;
+
+      if (
+        (mediaType === "movie" && hasSeasonOrEpisode) ||
+        (mediaType === "tv" && hasSeasonOrEpisode && !isValidEpisodeParams)
+      ) {
+        setError("This playback link is invalid.");
+        setIsLoading(false);
+        return;
+      }
+
       try {
-        const resolvedUrl = await resolvePlaybackSource(mediaType, id);
+        const resolvedUrl = await resolvePlaybackSource(
+          mediaType,
+          id,
+          mediaType === "tv" && isValidEpisodeParams
+            ? { season: Number(season), episode: Number(episode) }
+            : undefined,
+        );
         if (isActive) setSourceUrl(resolvedUrl);
       } catch (loadError) {
         if (isActive) {
@@ -60,17 +90,17 @@ export default function WatchScreen() {
     return () => {
       isActive = false;
     };
-  }, [id, mediaType]);
+  }, [episode, id, mediaType, season]);
 
   return (
   <SafeAreaView>
     <View className="flex-1 bg-[#141414]">
-      <View className="flex-row items-center gap-4 px-4 py-3">
+      <View className="flex-row items-center gap-4 px-4 py-2">
         <TouchableOpacity
           onPress={() => router.back()}
           accessibilityRole="button"
           accessibilityLabel="Go back"
-          className="rounded-full bg-zinc-800 p-2"
+          className="p-2"
         >
           <Ionicons name="arrow-back" size={22} color="white" />
         </TouchableOpacity>

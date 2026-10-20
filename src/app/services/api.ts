@@ -20,6 +20,7 @@ const ENDPOINTS = {
     topRated: "tv/top_rated",
     details: "tv",
     genreList: "genre/tv/list",
+    episodes:''
   },
 } as const;
 
@@ -187,6 +188,32 @@ export const fetchTvDetails = (tvId: number, page?: number) =>
 
 // TO DO LIST
 
-// FUNCTION TO FETCH MOVIE AND SERIES GENRES
+export const fetchMovieGenres = (language?: string) =>
+  fetchContent(
+    ENDPOINTS.movies.genreList,
+    undefined,
+    undefined,
+    undefined,
+    language,
+  );
+export const fetchTvGenres = (language?: string) =>
+  fetchContent(
+    ENDPOINTS.tv.genreList,
+    undefined,
+    undefined,
+    undefined,
+    language,
+  );
 
-// FUNCTION TO FETCH EPISODES FOR SERIES
+export const fetchTvEpisode = (
+  seriesID: string,
+  seasonNumber: number,
+  language = "en-US",
+) =>
+  fetchContent(
+    `${ENDPOINTS.tv.details}/${seriesID}/season/${seasonNumber}`,
+    undefined,
+    undefined,
+    undefined,
+    language,
+  );

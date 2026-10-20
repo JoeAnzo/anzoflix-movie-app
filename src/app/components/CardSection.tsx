@@ -15,6 +15,9 @@ interface MovieSectionProps {
   onInitialFetchErrorChange?: (title: string, hasError: boolean) => void;
 }
 
+export const cardSectionQueryKey = (title: string, language: string) =>
+  ["card-section", title, language] as const;
+
 const CardSection = ({
   title,
   fetcher,
@@ -33,7 +36,7 @@ const CardSection = ({
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ['card-section', title, selectedLanguage],
+    queryKey: cardSectionQueryKey(title, selectedLanguage),
     initialPageParam: 1,
     queryFn: async ({ pageParam = 1 }) => {
       if (!fetcher) return { results: [], page: pageParam, total_pages: pageParam };
