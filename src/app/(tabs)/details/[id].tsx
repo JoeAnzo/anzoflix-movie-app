@@ -237,9 +237,9 @@ const DetailsScreen = () => {
     );
   }
 
-  if (fetchStatus === "paused" || isError) {
+  if (fetchStatus === "paused" || isError || similarError || detailsError) {
     return (
-      <View className="flex-1 bg-[#141414] p-4">
+      <View className="flex-1 bg-[#1b1414] p-4">
         <View className="flex-row items-center justify-between py-2">
           <View className="flex-row items-center gap-2">
             <Logo />
