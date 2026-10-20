@@ -14,6 +14,7 @@ import {
     View,
 } from "react-native";
 import CardSection from "../../components/CardSection";
+import { formatReleaseDate,formatRating,getAgeRating } from "../../../../utils/formatters";
 import Logo from "../../components/Logo";
 import Search from "../../components/Search";
 import VideoPlayer from "../../components/videoPlayer";
@@ -392,6 +393,15 @@ const DetailsScreen = () => {
                   numberOfLines={5}
                 >
                   {details.overview || "No overview available."}
+                </Text>
+                <Text className="mt-4 text-base font-bold text-white">
+                  Rating {formatRating(details.vote_average)}
+                </Text>
+                <Text className="mt-4 text-base font-bold text-white">
+                  PG Rating {getAgeRating(details, mediaType)}
+                </Text>
+                <Text className="mt-4 text-base font-bold text-white">
+                  Release Date {formatReleaseDate(details.release_date || details.first_air_date)}
                 </Text>
               </View>
             </ImageBackground>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import MoviePlayer from "../components/MoviePlayer";
 import { resolvePlaybackSource, type MediaType } from "../services/api";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const isMediaType = (value: string | undefined): value is MediaType =>
   value === "movie" || value === "tv";
@@ -62,6 +63,7 @@ export default function WatchScreen() {
   }, [id, mediaType]);
 
   return (
+  <SafeAreaView>
     <View className="flex-1 bg-[#141414]">
       <View className="flex-row items-center gap-4 px-4 py-3">
         <TouchableOpacity
@@ -103,5 +105,6 @@ export default function WatchScreen() {
         </View>
       )}
     </View>
+  </SafeAreaView>
   );
 }
