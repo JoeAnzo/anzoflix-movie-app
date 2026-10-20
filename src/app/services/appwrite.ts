@@ -662,3 +662,24 @@ export const authenticateWithGoogle = async () => {
     throw error;
   }
 };
+
+
+export const searchMoviesInDatabase = async (
+  query: string,
+  where: "saved" | "watchlist",
+) => {
+  try {
+    const currentUser = await account.get();
+    const tableId = where === "saved" ? SAVED_TABLE_ID : WATCHLIST_TABLE_ID;
+
+    const response = await databases.listDocuments(DATABASE_ID, tableId, [
+      Query.search("movie_title", query),
+      Query.equal("user_id", currentUser.$id),
+    ]);
+
+    return response.documents;
+  } catch (error) {
+    console.error("Error searching user-scoped media:", error);
+    throw error;
+  }
+};

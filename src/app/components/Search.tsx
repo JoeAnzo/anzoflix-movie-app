@@ -12,9 +12,10 @@ import {
 import { useContent } from "../hooks/useContent";
 import { useDebounce } from "../hooks/useDedounce";
 import { searchContent } from "../services/api";
+import { searchMoviesInDatabase } from "../services/appwrite";
 
 interface SearchProps {
-  screen: "home" | "category" | "watchlist" | "saved";
+  screen: "home" | "category" | "watchlist" | "saved" | "details";
   placeholder: string;
 }
 
@@ -22,17 +23,25 @@ const Search = ({ screen, placeholder }: SearchProps) => {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 400);
+  const usesDatabaseSearch = screen === "saved" || screen === "watchlist";
 
   const {
     data: searchResults = [],
     isFetching,
     isError,
     refetch,
-  } = useContent(["search", debouncedQuery], () => {
+  } = useContent(["search", screen, debouncedQuery], () => {
     const cleanedQuery = debouncedQuery.trim();
 
     if (!cleanedQuery) {
       return Promise.resolve({ success: true, data: { results: [] } });
+    }
+
+    if (screen === "saved" || screen === "watchlist") {
+      return searchMoviesInDatabase(cleanedQuery, screen).then((results) => ({
+        success: true,
+        data: results,
+      }));
     }
 
     return searchContent(cleanedQuery, 1);
@@ -47,9 +56,10 @@ const Search = ({ screen, placeholder }: SearchProps) => {
       item.media_type === "movie" || item.media_type === "tv"
         ? item.media_type
         : "movie";
+    const id = usesDatabaseSearch ? item.tmdb_id : item.id;
 
     router.push({
-      pathname: `../details/${item.id}`,
+      pathname: `../details/${id}`,
       params: { mediaType },
     });
 
@@ -58,7 +68,7 @@ const Search = ({ screen, placeholder }: SearchProps) => {
 
   return (
     <View className="relative z-20" style={{ elevation: 20 }}>
-      <View className="flex-row items-center justify-between gap-1">
+      <View className="flex-row items-center justify-between">
         <TextInput
           value={query}
           onChangeText={setQuery}
@@ -96,13 +106,19 @@ const Search = ({ screen, placeholder }: SearchProps) => {
           ) : filteredResults.length > 0 ? (
             <FlatList
               data={filteredResults}
-              keyExtractor={(item) => `${item.id}-${item.media_type}`}
+              keyExtractor={(item) =>
+                `${usesDatabaseSearch ? item.tmdb_id : item.id}-${item.media_type}`
+              }
               scrollEnabled={false}
               renderItem={({ item }) => {
-                const title = item.title || item.name || "Unknown title";
-                const posterUrl = item.poster_path
-                  ? `https://image.tmdb.org/t/p/w92/${item.poster_path}`
-                  : null;
+                const title = usesDatabaseSearch
+                  ? item.movie_title || "Unknown title"
+                  : item.title || item.name || "Unknown title";
+                const posterUrl = usesDatabaseSearch
+                  ? item.movie_poster || null
+                  : item.poster_path
+                    ? `https://image.tmdb.org/t/p/w92/${item.poster_path}`
+                    : null;
 
                 return (
                   <Pressable
@@ -137,7 +153,7 @@ const Search = ({ screen, placeholder }: SearchProps) => {
               }}
             />
           ) : (
-            <Text className="p-3 text-zinc-400">No results found</Text>
+            <Text className="p-3 text-zinc-400">No Movies /Tv show founds</Text>
           )}
         </View>
       )}

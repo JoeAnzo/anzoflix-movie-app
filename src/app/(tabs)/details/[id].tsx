@@ -188,7 +188,7 @@ const DetailsScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <Search screen="home" placeholder="Search movies and tv shows here" />
+          <Search screen="details" placeholder="Search movies and tv shows here" />
           <ScrollView showsVerticalScrollIndicator={false}>
             <View className="h-[560px] w-full overflow-hidden rounded-md bg-zinc-900">
               <Animated.View
@@ -294,7 +294,7 @@ const DetailsScreen = () => {
             <Ionicons name="person-circle-outline" size={26} color="white" />
           </TouchableOpacity>
         </View>
-        <Search screen="home" placeholder="search movies and tv shows here"/>
+        <Search screen="details" placeholder="search movies and tv shows here"/>
         <View className="relative flex-1">
           <ScrollView showsVerticalScrollIndicator={false}>
             <ImageBackground

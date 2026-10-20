@@ -237,8 +237,8 @@ export default function WatchlistScreen() {
             </TouchableOpacity>
           </View>
           <Search
-            screen="saved"
-            placeholder="search saved movies and tv shows here"
+            screen="watchlist"
+            placeholder="search watchlist movies and tv shows here"
           />
         </View>
         <Text className="mb-5 text-lg font-bold text-white py-4">

@@ -52,6 +52,10 @@ export default function LoginScreen() {
 
   let ActiveError = signInMutation.error || googleAuthMutation.error;
 
+
+
+
+
   return (
     <ImageBackground
       source={require("../../../assets/images/cinemaHall.jpg")}

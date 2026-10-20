@@ -183,3 +183,10 @@ export const fetchTvDetails = (tvId: number, page?: number) =>
     undefined,
     "videos,credits",
   );
+
+
+// TO DO LIST
+
+// FUNCTION TO FETCH MOVIE AND SERIES GENRES
+
+// FUNCTION TO FETCH EPISODES FOR SERIES
