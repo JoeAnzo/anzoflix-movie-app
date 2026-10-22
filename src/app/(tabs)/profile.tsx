@@ -195,7 +195,7 @@ export default function ProfileScreen() {
               onPress={showAccountDetails}
               className="h-9 w-9 items-center justify-center rounded-full bg-white/5"
             >
-              <Ionicons name="create-outline" size={18} color="#E50914" />
+              <Ionicons name="create-outline" size={18} color="white" />
             </Pressable>
           </View>
           <View className="my-5 h-px bg-white/10" />
@@ -205,12 +205,12 @@ export default function ProfileScreen() {
             className="flex-row items-center justify-between"
           >
             <View className="flex-row items-center">
-              <Ionicons name="bookmark" size={17} color="#E50914" />
+              <Ionicons name="bookmark" size={17} color="#FFFFFF" />
               <Text className="ml-2 text-sm font-semibold text-zinc-200">
                 Your saved titles
               </Text>
             </View>
-            <Ionicons name="arrow-forward" size={18} color="#E50914" />
+            <Ionicons name="arrow-forward" size={18} color="#FFFFFF" />
           </Pressable>
         </View>
 

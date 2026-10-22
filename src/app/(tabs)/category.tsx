@@ -41,7 +41,6 @@ interface GenreSectionProps {
   title: string;
   genres: Genre[];
   popularItems: PopularItem[];
-  isLoading: boolean;
   isError: boolean;
   onRetry: () => void;
   fallbackIcon: "film-outline" | "tv-outline";
@@ -51,7 +50,6 @@ const GenreSection = ({
   title,
   genres,
   popularItems,
-  isLoading,
   isError,
   onRetry,
   fallbackIcon,
@@ -59,9 +57,7 @@ const GenreSection = ({
   <View className="gap-4">
     <Text className="text-2xl font-bold text-white">{title}</Text>
 
-    {isLoading ? (
-      <ActivityIndicator color="#E50914" />
-    ) : isError ? (
+    {isError ? (
       <View className="flex-row items-center justify-between rounded-lg bg-zinc-900 p-4">
         <Text className="mr-4 flex-1 text-sm text-zinc-400">
           Couldn’t load {title.toLowerCase()} genres. Check your connection and
@@ -174,6 +170,11 @@ const Category = () => {
     popularMoviesQuery.data?.pages.flatMap((page) => page.results) ?? [];
   const popularTvList =
     popularTvQuery.data?.pages.flatMap((page) => page.results) ?? [];
+  const isLoading =
+    movieGenresQuery.isPending ||
+    popularMoviesQuery.isPending ||
+    tvGenresQuery.isPending ||
+    popularTvQuery.isPending;
 
   return (
     <View className="flex-1 bg-[#141414] p-2">
@@ -196,36 +197,47 @@ const Category = () => {
       </View>
 
       <ScrollView
-        className="mt-4 bg-[#141414]"
+        className="mt-4 flex-1 bg-[#141414]"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: 8, gap: 28, paddingBottom: 24 }}
+        contentContainerStyle={
+          isLoading
+            ? {
+                flexGrow: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 8,
+              }
+            : { padding: 8, gap: 28, paddingBottom: 24 }
+        }
       >
-        <GenreSection
-          title="Movie Genres"
-          genres={movieGenresQuery.data ?? []}
-          popularItems={popularMoviesList}
-          isLoading={
-            movieGenresQuery.isPending || popularMoviesQuery.isPending
-          }
-          isError={movieGenresQuery.isError || popularMoviesQuery.isError}
-          onRetry={() => {
-            void movieGenresQuery.refetch();
-            void popularMoviesQuery.refetch();
-          }}
-          fallbackIcon="film-outline"
-        />
-        <GenreSection
-          title="TV Show Genres"
-          genres={tvGenresQuery.data ?? []}
-          popularItems={popularTvList}
-          isLoading={tvGenresQuery.isPending || popularTvQuery.isPending}
-          isError={tvGenresQuery.isError || popularTvQuery.isError}
-          onRetry={() => {
-            void tvGenresQuery.refetch();
-            void popularTvQuery.refetch();
-          }}
-          fallbackIcon="tv-outline"
-        />
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#E50914" />
+        ) : (
+          <>
+            <GenreSection
+              title="Movie Genres"
+              genres={movieGenresQuery.data ?? []}
+              popularItems={popularMoviesList}
+              isError={movieGenresQuery.isError || popularMoviesQuery.isError}
+              onRetry={() => {
+                void movieGenresQuery.refetch();
+                void popularMoviesQuery.refetch();
+              }}
+              fallbackIcon="film-outline"
+            />
+            <GenreSection
+              title="TV Show Genres"
+              genres={tvGenresQuery.data ?? []}
+              popularItems={popularTvList}
+              isError={tvGenresQuery.isError || popularTvQuery.isError}
+              onRetry={() => {
+                void tvGenresQuery.refetch();
+                void popularTvQuery.refetch();
+              }}
+              fallbackIcon="tv-outline"
+            />
+          </>
+        )}
       </ScrollView>
     </View>
   );

@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import WebView from "react-native-webview";
 import * as ScreenOrientation from "expo-screen-orientation";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 interface MoviePlayerProps {
   sourceUrl: string;
@@ -25,12 +24,10 @@ export default function MoviePlayer({ sourceUrl }: MoviePlayerProps) {
 
 
   return (
-
-  <SafeAreaView>
-    <View className="flex-1 w-full h-full bg-black overflow-hidden">
+    <View style={{ flex: 1, width: "100%", backgroundColor: "#000" }}>
       <WebView
         source={{ uri: sourceUrl }}
-        className="flex-1 bg-black"
+        style={{ flex: 1, backgroundColor: "#000" }}
         originWhitelist={["https://*"]}
         javaScriptEnabled
         domStorageEnabled
@@ -38,8 +35,19 @@ export default function MoviePlayer({ sourceUrl }: MoviePlayerProps) {
         mediaPlaybackRequiresUserAction={false}
         allowsInlineMediaPlayback={true}
         startInLoadingState
+        renderLoading={() => (
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#000",
+            }}
+          >
+            <ActivityIndicator color="#E50914" />
+          </View>
+        )}
       />
     </View>
-  </SafeAreaView>
   );
 }

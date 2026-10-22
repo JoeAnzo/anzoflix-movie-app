@@ -1,0 +1,435 @@
+{
+  "ok": false,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 4,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"curtain-scene\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#curtain-scene",
+        "dataAttributes": {},
+        "sourceFile": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"curtain-scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"browse-scene\"> is a timeline element that contains nested <div id=\"browse-panel\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#browse-scene",
+        "dataAttributes": {},
+        "sourceFile": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"browse-scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"details-scene\"> is a timeline element that contains nested <div id=\"detail-panel\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#details-scene",
+        "dataAttributes": {},
+        "sourceFile": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"details-scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"watch-scene\"> is a timeline element that contains nested <div id=\"watch-panel\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#watch-scene",
+        "dataAttributes": {},
+        "sourceFile": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"watch-scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 5,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "console_warning",
+        "severity": "warning",
+        "message": "GSAP target #hero-photo not found. https://gsap.com",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "20",
+          "data-width": "1280",
+          "data-height": "720"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:37733/",
+        "line": 70
+      },
+      {
+        "code": "console_warning",
+        "severity": "warning",
+        "message": "GSAP target  not found. https://gsap.com",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "20",
+          "data-width": "1280",
+          "data-height": "720"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:37733/",
+        "line": 70
+      },
+      {
+        "code": "console_warning",
+        "severity": "warning",
+        "message": "GSAP target  not found. https://gsap.com",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "20",
+          "data-width": "1280",
+          "data-height": "720"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720
+        },
+        "time": 0,
+        "url": "http://127.0.0.1:37733/",
+        "line": 70
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"browse-sfx\" is 0.60s but its slot (data-duration) is 0.80s — the slot is shortened to the media length when rendered. Set data-duration to ~0.60s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "20",
+          "data-width": "1280",
+          "data-height": "720"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720
+        },
+        "time": 0
+      },
+      {
+        "code": "clip_media_fit",
+        "severity": "warning",
+        "message": "Audio \"watchlist-sfx\" is 0.01s but its slot (data-duration) is 0.50s — the slot is shortened to the media length when rendered. Set data-duration to ~0.01s if that isn't intended.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {
+          "data-composition-id": "main",
+          "data-start": "0",
+          "data-duration": "20",
+          "data-width": "1280",
+          "data-height": "720"
+        },
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720
+        },
+        "time": 0
+      }
+    ]
+  },
+  "layout": {
+    "ok": false,
+    "errorCount": 1,
+    "warningCount": 0,
+    "infoCount": 2,
+    "findings": [
+      {
+        "code": "content_overlap",
+        "severity": "error",
+        "time": 18.889,
+        "selector": "p.playback-copy",
+        "message": "Two text blocks overlap and may render unreadable.",
+        "rect": {
+          "left": 273.05,
+          "top": 390.5,
+          "right": 580.95,
+          "bottom": 410.5,
+          "width": 307.9,
+          "height": 20
+        },
+        "containerSelector": "p.end-line",
+        "text": "Checking authorized playback sources…",
+        "fixHint": "Give each block its own zone, or put data-layout-allow-overlap on the text or on a container inside the scene. A marker on the scene root does not apply.",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 273.05,
+          "y": 390.5,
+          "width": 307.9,
+          "height": 20
+        },
+        "firstSeen": 17.125,
+        "lastSeen": 20,
+        "occurrences": 25,
+        "heldMs": 2875,
+        "times": [
+          17.125,
+          17.25,
+          17.375,
+          17.5,
+          17.625,
+          17.75,
+          17.875,
+          18,
+          18.125,
+          18.25,
+          18.375,
+          18.5,
+          18.625,
+          18.75,
+          18.875,
+          18.889,
+          19,
+          19.125,
+          19.25,
+          19.375,
+          19.5,
+          19.625,
+          19.75,
+          19.875,
+          20
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 18.889,
+        "selector": "div.watch-title",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 131,
+          "top": 138,
+          "right": 221.89,
+          "bottom": 161,
+          "width": 90.89,
+          "height": 23
+        },
+        "containerSelector": "#end-card",
+        "text": "Afterglow",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 131,
+          "y": 138,
+          "width": 90.89,
+          "height": 23
+        },
+        "firstSeen": 18.889,
+        "lastSeen": 18.889,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          18.889
+        ]
+      },
+      {
+        "code": "text_occluded",
+        "severity": "info",
+        "time": 18.889,
+        "selector": "p.playback-copy",
+        "message": "Text is hidden beneath an opaque element.",
+        "rect": {
+          "left": 273.05,
+          "top": 390.5,
+          "right": 580.95,
+          "bottom": 410.5,
+          "width": 307.91,
+          "height": 20
+        },
+        "containerSelector": "#end-card",
+        "text": "Checking authorized playback sources…",
+        "fixHint": "Give the text its own zone, raise its stacking order above the covering element, or mark intentional layering with data-layout-allow-occlusion.",
+        "coveredFraction": 1,
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 273.05,
+          "y": 390.5,
+          "width": 307.91,
+          "height": 20
+        },
+        "firstSeen": 18.889,
+        "lastSeen": 18.889,
+        "occurrences": 1,
+        "heldMs": 0,
+        "times": [
+          18.889
+        ]
+      }
+    ],
+    "duration": 20,
+    "samples": [
+      1.111,
+      3.333,
+      5.556,
+      7.778,
+      10,
+      12.222,
+      14.444,
+      16.667,
+      18.889
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 3,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": false,
+    "errorCount": 1,
+    "warningCount": 1,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "contrast_aa_failure",
+        "severity": "warning",
+        "message": "Contrast is 3.84:1; WCAG AA requires 4.5:1.",
+        "text": "Discover",
+        "fg": "rgb(229,9,20)",
+        "bg": "rgb(20,20,20)",
+        "ratio": 3.84,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(234,56,65)",
+        "large": false,
+        "selector": "div > section:nth-of-type(2) > div:nth-of-type(2) > div",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 690,
+          "y": 251.5,
+          "width": 123.875,
+          "height": 17
+        },
+        "time": 5.556,
+        "times": [
+          5.556
+        ]
+      },
+      {
+        "code": "contrast_aa_failure",
+        "severity": "error",
+        "message": "Contrast is 3.84:1; WCAG AA requires 4.5:1.",
+        "text": "Keep it close",
+        "fg": "rgb(229,9,20)",
+        "bg": "rgb(20,20,20)",
+        "ratio": 3.84,
+        "requiredRatio": 4.5,
+        "suggestedColor": "rgb(234,56,65)",
+        "large": false,
+        "selector": "div > section:nth-of-type(3) > div:nth-of-type(2) > div",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 699.5206909179688,
+          "y": 251.5,
+          "width": 165.15625,
+          "height": 17
+        },
+        "time": 10,
+        "times": [
+          10,
+          14.444
+        ]
+      }
+    ],
+    "enabled": true,
+    "samples": [
+      1.111,
+      5.556,
+      10,
+      14.444,
+      18.889
+    ],
+    "checked": 40,
+    "passed": 37
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

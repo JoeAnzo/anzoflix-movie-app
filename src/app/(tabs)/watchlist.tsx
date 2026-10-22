@@ -337,7 +337,7 @@ export default function WatchlistScreen() {
               },
             ],
           }}
-          className="rounded-md rgba(51, 51, 51, 0.8) px-4 py-3"
+          className="rounded-md bg-[#141414] px-4 py-3"
         >
           <View className="flex-row items-center justify-between gap-3">
             <Text className="text-sm font-medium text-white">

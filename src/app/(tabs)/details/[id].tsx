@@ -506,7 +506,7 @@ const DetailsScreen = () => {
                 elevation: 50,
                 zIndex: 50,
               }}
-              className="absolute left-4 right-4 top-2 z-50 rounded-2xl border  rgba(51, 51, 51, 0.8) px-4 py-3"
+              className="absolute left-4 right-4 top-2 z-50 rounded-2xl border  bg-[#141414] px-4 py-3"
             >
               <Text className="text-center text-sm font-semibold text-white">
                 {toastMessage}

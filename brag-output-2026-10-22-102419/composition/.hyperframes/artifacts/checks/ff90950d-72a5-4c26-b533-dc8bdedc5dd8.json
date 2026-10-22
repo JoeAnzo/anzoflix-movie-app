@@ -1,0 +1,145 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 4,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"curtain-scene\"> is a timeline element that contains nested <img id=\"hero-photo\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#curtain-scene",
+        "dataAttributes": {},
+        "sourceFile": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"curtain-scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"browse-scene\"> is a timeline element that contains nested <div id=\"browse-panel\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#browse-scene",
+        "dataAttributes": {},
+        "sourceFile": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"browse-scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"details-scene\"> is a timeline element that contains nested <div id=\"detail-panel\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#details-scene",
+        "dataAttributes": {},
+        "sourceFile": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"details-scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<section id=\"watch-scene\"> is a timeline element that contains nested <div id=\"watch-panel\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#watch-scene",
+        "dataAttributes": {},
+        "sourceFile": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <section id=\"watch-scene\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 20,
+    "samples": [
+      1.111,
+      3.333,
+      5.556,
+      7.778,
+      10,
+      12.222,
+      14.444,
+      16.667,
+      18.889
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      1.111,
+      5.556,
+      10,
+      14.444,
+      18.889
+    ],
+    "checked": 38,
+    "passed": 38
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}

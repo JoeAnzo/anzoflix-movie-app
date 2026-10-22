@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280, height=720" />
+    <title>AnzoFlix — Find your next watch</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #141414;
+        --panel: #1f1f1f;
+        --panel-light: #27272a;
+        --red: #e50914;
+        --white: #ffffff;
+        --muted: #a1a1aa;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--white);
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--red);
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+      }
+
+      .brand-mark {
+        display: block;
+        width: 38px;
+        height: 38px;
+        flex: none;
+      }
+
+      .hero-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 35%;
+      }
+
+      .hero-shade {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(8, 8, 8, 0.86), rgba(8, 8, 8, 0.22) 72%),
+          linear-gradient(0deg, rgba(8, 8, 8, 0.72), transparent 62%);
+      }
+
+      .hero-copy {
+        position: absolute;
+        left: 118px;
+        top: 230px;
+      }
+
+      .hero-copy .brand {
+        margin-bottom: 28px;
+        font-size: 46px;
+      }
+
+      .hero-copy .brand-mark {
+        width: 46px;
+        height: 46px;
+      }
+
+      .hero-title {
+        max-width: 690px;
+        font-size: 66px;
+        font-weight: 750;
+        letter-spacing: -2.4px;
+        line-height: 1.08;
+      }
+
+      .hero-kicker {
+        margin-top: 22px;
+        color: #f4f4f5;
+        font-size: 19px;
+        letter-spacing: 0.4px;
+      }
+
+      .scene-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #ea3841;
+        font-size: 14px;
+        font-weight: 750;
+        letter-spacing: 2.2px;
+        text-transform: uppercase;
+      }
+
+      .scene-label::before {
+        width: 24px;
+        height: 2px;
+        background: #ea3841;
+        content: "";
+      }
+
+      .feature-copy {
+        position: absolute;
+        top: 245px;
+        left: 690px;
+        width: 480px;
+      }
+
+      .feature-copy h2 {
+        margin-top: 22px;
+        font-size: 48px;
+        font-weight: 720;
+        letter-spacing: -1.9px;
+        line-height: 1.1;
+      }
+
+      .feature-copy p {
+        margin-top: 20px;
+        max-width: 390px;
+        color: #d4d4d8;
+        font-size: 21px;
+        line-height: 1.5;
+      }
+
+      .browse-panel,
+      .detail-panel,
+      .watch-panel {
+        position: absolute;
+        border: 1px solid #38383b;
+        border-radius: 24px;
+        background: #0c0c0d;
+        box-shadow: 0 28px 90px rgba(0, 0, 0, 0.62);
+      }
+
+      .browse-panel {
+        top: 40px;
+        left: 100px;
+        width: 500px;
+        height: 640px;
+        padding: 18px 25px;
+      }
+
+      .app-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 36px;
+      }
+
+      .mini-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--red);
+        font-size: 21px;
+        font-weight: 800;
+        letter-spacing: -0.6px;
+      }
+
+      .mini-brand .brand-mark {
+        width: 23px;
+        height: 23px;
+      }
+
+      .profile-dot {
+        width: 25px;
+        height: 25px;
+        border: 1.5px solid #dadada;
+        border-radius: 50%;
+        position: relative;
+      }
+
+      .profile-dot::before {
+        position: absolute;
+        top: 4px;
+        left: 8px;
+        width: 6px;
+        height: 6px;
+        border: 1px solid #dadada;
+        border-radius: 50%;
+        content: "";
+      }
+
+      .profile-dot::after {
+        position: absolute;
+        bottom: 3px;
+        left: 5px;
+        width: 12px;
+        height: 6px;
+        border: 1px solid #dadada;
+        border-radius: 8px 8px 5px 5px;
+        content: "";
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: 40px;
+        margin-top: 10px;
+        padding: 0 14px;
+        border: 1px solid #333336;
+        border-radius: 8px;
+        background: #1b1b1d;
+        color: #d4d4d8;
+        font-size: 13px;
+      }
+
+      .search-icon {
+        position: relative;
+        width: 13px;
+        height: 13px;
+        flex: none;
+        border: 1.6px solid #d4d4d8;
+        border-radius: 50%;
+      }
+
+      .search-icon::after {
+        position: absolute;
+        right: -5px;
+        bottom: -3px;
+        width: 6px;
+        height: 1.6px;
+        background: #d4d4d8;
+        content: "";
+        transform: rotate(45deg);
+        transform-origin: left center;
+      }
+
+      .feed-title {
+        margin-top: 12px;
+        font-size: 22px;
+        font-weight: 720;
+      }
+
+      .feed-row {
+        margin-top: 8px;
+      }
+
+      .feed-row-title {
+        margin-bottom: 6px;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .poster-row {
+        display: flex;
+        gap: 11px;
+      }
+
+      .poster-card {
+        position: relative;
+        width: 84px;
+        height: 105px;
+        flex: none;
+        overflow: hidden;
+        border-radius: 7px;
+        background: #27272a;
+      }
+
+      .poster-card::before,
+      .poster-card::after {
+        position: absolute;
+        content: "";
+      }
+
+      .poster-card::before {
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 68% 28%, rgba(255, 219, 150, 0.85), transparent 22%),
+          linear-gradient(146deg, transparent 42%, rgba(14, 18, 29, 0.8) 43%),
+          linear-gradient(22deg, #27151e, #9a2632 56%, #e27646);
+      }
+
+      .poster-card:nth-child(2)::before {
+        background:
+          radial-gradient(ellipse at 45% 35%, rgba(194, 228, 255, 0.85), transparent 19%),
+          linear-gradient(160deg, transparent 35%, #111b2e 36%),
+          linear-gradient(38deg, #0f1e2d, #277d91 57%, #c2a178);
+      }
+
+      .poster-card:nth-child(3)::before {
+        background:
+          radial-gradient(ellipse at 58% 26%, rgba(255, 212, 122, 0.88), transparent 20%),
+          linear-gradient(155deg, transparent 39%, #28321f 40%),
+          linear-gradient(26deg, #26251c, #7c783c 58%, #d8914f);
+      }
+
+      .poster-card:nth-child(4)::before {
+        background:
+          radial-gradient(ellipse at 58% 30%, rgba(230, 186, 218, 0.85), transparent 21%),
+          linear-gradient(150deg, transparent 40%, #24162a 41%),
+          linear-gradient(22deg, #1b1628, #713d70 58%, #d28b85);
+      }
+
+      .poster-card span {
+        position: absolute;
+        z-index: 1;
+        right: 7px;
+        bottom: 7px;
+        left: 7px;
+        height: 2px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.86);
+      }
+
+      .bottom-tabs {
+        position: absolute;
+        right: 25px;
+        bottom: 10px;
+        left: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 36px;
+        border-radius: 10px;
+        background: #b80c13;
+        color: var(--white);
+        font-size: 12px;
+        font-weight: 650;
+      }
+
+      .detail-panel {
+        top: 70px;
+        left: 100px;
+        width: 540px;
+        height: 565px;
+        padding: 16px;
+      }
+
+      .detail-art {
+        position: relative;
+        height: 234px;
+        overflow: hidden;
+        border-radius: 14px;
+        background:
+          radial-gradient(ellipse at 66% 34%, rgba(249, 170, 110, 0.9), transparent 18%),
+          linear-gradient(145deg, transparent 45%, rgba(13, 18, 27, 0.93) 46%),
+          linear-gradient(24deg, #172332 4%, #823b43 58%, #df9062);
+      }
+
+      .detail-art::before {
+        position: absolute;
+        right: 38px;
+        bottom: -40px;
+        width: 196px;
+        height: 195px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 50%;
+        content: "";
+      }
+
+      .detail-art::after {
+        position: absolute;
+        right: 84px;
+        bottom: -8px;
+        width: 92px;
+        height: 166px;
+        border-radius: 52% 52% 9% 9%;
+        background: linear-gradient(180deg, rgba(32, 30, 35, 0.2), #17171b);
+        content: "";
+      }
+
+      .detail-art-caption {
+        position: absolute;
+        z-index: 1;
+        top: 17px;
+        left: 19px;
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.7px;
+      }
+
+      .detail-title {
+        margin-top: 17px;
+        font-size: 29px;
+        font-weight: 760;
+        letter-spacing: -0.8px;
+      }
+
+      .detail-meta {
+        margin-top: 8px;
+        color: #d4d4d8;
+        font-size: 14px;
+      }
+
+      .detail-actions {
+        display: flex;
+        align-items: flex-start;
+        gap: 31px;
+        margin-top: 26px;
+      }
+
+      .detail-action {
+        display: flex;
+        min-width: 66px;
+        align-items: center;
+        flex-direction: column;
+        gap: 8px;
+        color: #f4f4f5;
+        font-size: 12px;
+        font-weight: 650;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .detail-action svg {
+        width: 26px;
+        height: 26px;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.8;
+      }
+
+      .watchlist-action {
+        min-width: 120px;
+        padding: 4px 10px 8px;
+        border-radius: 12px;
+        background: rgba(229, 9, 20, 0.16);
+        color: var(--white);
+      }
+
+      .watchlist-action svg {
+        color: var(--red);
+      }
+
+      .detail-overview {
+        margin-top: 22px;
+        color: #d4d4d8;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .watch-panel {
+        top: 108px;
+        left: 102px;
+        width: 650px;
+        height: 450px;
+        padding: 20px;
+      }
+
+      .watch-title {
+        margin-left: 8px;
+        font-size: 19px;
+        font-weight: 700;
+      }
+
+      .player-window {
+        position: relative;
+        display: flex;
+        height: 345px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 18px;
+        margin-top: 17px;
+        border: 1px solid #2c2c2f;
+        border-radius: 12px;
+        background:
+          radial-gradient(ellipse at 50% 44%, rgba(91, 18, 25, 0.42), transparent 46%),
+          #060607;
+        text-align: center;
+      }
+
+      .play-ring {
+        display: flex;
+        width: 64px;
+        height: 64px;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--red);
+        border-radius: 50%;
+      }
+
+      .play-triangle {
+        width: 0;
+        height: 0;
+        margin-left: 5px;
+        border-top: 11px solid transparent;
+        border-bottom: 11px solid transparent;
+        border-left: 16px solid var(--white);
+      }
+
+      .playback-copy {
+        color: #e4e4e7;
+        font-size: 16px;
+      }
+
+      .end-card {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background:
+          radial-gradient(ellipse at 50% 46%, rgba(229, 9, 20, 0.18), transparent 41%),
+          #0b0b0c;
+      }
+
+      .end-card .brand {
+        font-size: 56px;
+      }
+
+      .end-card .brand-mark {
+        width: 54px;
+        height: 54px;
+      }
+
+      .end-line {
+        margin-top: 28px;
+        color: #f4f4f5;
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: 0.7px;
+      }
+
+      .end-rule {
+        width: 58px;
+        height: 3px;
+        margin-top: 22px;
+        border-radius: 3px;
+        background: var(--red);
+      }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-ondt"
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="20"
+      data-width="1280"
+      data-height="720"
+    >
+      <section data-hf-id="hf-dw4d"
+        id="curtain-scene"
+        class="clip"
+        data-start="0"
+        data-duration="4"
+        data-track-index="0"
+        aria-label="AnzoFlix opening"
+      >
+        <img data-hf-id="hf-kabm"
+          id="hero-photo"
+          class="hero-photo"
+          data-layout-allow-overflow
+          src="assets/images/cinemaHall.jpg"
+          alt=""
+        />
+        <div data-hf-id="hf-ga8s" class="hero-shade"></div>
+        <div data-hf-id="hf-00bm" class="hero-copy" id="hero-copy">
+          <div data-hf-id="hf-oojr" class="brand">
+            <svg data-hf-id="hf-80mo" class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+              <path data-hf-id="hf-14nz"
+                d="M6 15h36v25H6zM6 15l5-8h36l-5 8M14 7l5 8m7-8 5 8m7-8 5 8"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+              />
+            </svg>
+            <span data-hf-id="hf-cuba">AnzoFlix</span>
+          </div>
+          <h1 data-hf-id="hf-035v" class="hero-title">Find your next watch.</h1>
+          <p data-hf-id="hf-r6oq" class="hero-kicker">Movies and TV, ready to explore.</p>
+        </div>
+      </section>
+
+      <section data-hf-id="hf-3g1c"
+        id="browse-scene"
+        class="clip"
+        data-start="4"
+        data-duration="5.5"
+        data-track-index="1"
+        aria-label="Browse the AnzoFlix home screen"
+      >
+        <div data-hf-id="hf-t16m" class="browse-panel" id="browse-panel">
+          <div data-hf-id="hf-cl9d" class="app-header">
+            <div data-hf-id="hf-2vjd" class="mini-brand">
+              <svg data-hf-id="hf-z7rc" class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                <path data-hf-id="hf-7ads"
+                  d="M6 15h36v25H6zM6 15l5-8h36l-5 8M14 7l5 8m7-8 5 8m7-8 5 8"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                />
+              </svg>
+              <span data-hf-id="hf-cwre">AnzoFlix</span>
+            </div>
+            <div data-hf-id="hf-mxwy" class="profile-dot" aria-hidden="true"></div>
+          </div>
+          <div data-hf-id="hf-pwj0" class="search-box">
+            <span data-hf-id="hf-hyv0" class="search-icon" aria-hidden="true"></span>
+            <span data-hf-id="hf-4cv6">Search movies here and tv series</span>
+          </div>
+          <h2 data-hf-id="hf-e5e3" class="feed-title">Movies</h2>
+          <div data-hf-id="hf-sz3n" class="feed-row">
+            <h3 data-hf-id="hf-m7qw" class="feed-row-title">Now Playing</h3>
+            <div data-hf-id="hf-hajo" class="poster-row">
+              <div data-hf-id="hf-aleq" class="poster-card"><span data-hf-id="hf-uckh"></span></div>
+              <div data-hf-id="hf-0n9i" class="poster-card"><span data-hf-id="hf-l73p"></span></div>
+              <div data-hf-id="hf-11kj" class="poster-card"><span data-hf-id="hf-me0s"></span></div>
+              <div data-hf-id="hf-1fvk" class="poster-card"><span data-hf-id="hf-lzpr"></span></div>
+            </div>
+          </div>
+          <div data-hf-id="hf-lv6b" class="feed-row">
+            <h3 data-hf-id="hf-jc77" class="feed-row-title">Trending</h3>
+            <div data-hf-id="hf-fuqk" class="poster-row">
+              <div data-hf-id="hf-ynqd" class="poster-card"><span data-hf-id="hf-n6mu"></span></div>
+              <div data-hf-id="hf-z21e" class="poster-card"><span data-hf-id="hf-msbt"></span></div>
+              <div data-hf-id="hf-zgcf" class="poster-card"><span data-hf-id="hf-nz8w"></span></div>
+              <div data-hf-id="hf-zung" class="poster-card"><span data-hf-id="hf-nkxv"></span></div>
+            </div>
+          </div>
+          <div data-hf-id="hf-lgva" class="feed-row">
+            <h3 data-hf-id="hf-ap98" class="feed-row-title">Upcoming</h3>
+            <div data-hf-id="hf-enth" class="poster-row">
+              <div data-hf-id="hf-x2i9" class="poster-card"><span data-hf-id="hf-ieyi"></span></div>
+              <div data-hf-id="hf-xgta" class="poster-card"><span data-hf-id="hf-i0nh"></span></div>
+              <div data-hf-id="hf-0nr6" class="poster-card"><span data-hf-id="hf-1qzj"></span></div>
+              <div data-hf-id="hf-09g5" class="poster-card"><span data-hf-id="hf-25ak"></span></div>
+            </div>
+          </div>
+          <div data-hf-id="hf-0duq" class="bottom-tabs">
+            <span data-hf-id="hf-e1du">Home</span><span data-hf-id="hf-b5wd">Category</span><span data-hf-id="hf-ma1c">Saved</span><span data-hf-id="hf-zdms">Watchlist</span>
+          </div>
+        </div>
+        <div data-hf-id="hf-z12q" class="feature-copy" id="browse-copy">
+          <div data-hf-id="hf-l792" class="scene-label">Discover</div>
+          <h2 data-hf-id="hf-a1ns">Movies and TV,<br data-hf-id="hf-x5px" />ready to explore.</h2>
+          <p data-hf-id="hf-rlnn">Browse Now Playing, Trending, and Upcoming.</p>
+        </div>
+      </section>
+
+      <section data-hf-id="hf-scgv"
+        id="details-scene"
+        class="clip"
+        data-start="9.5"
+        data-duration="5"
+        data-track-index="2"
+        aria-label="Save a title from its details screen"
+      >
+        <div data-hf-id="hf-4m3m" class="detail-panel" id="detail-panel">
+          <div data-hf-id="hf-wv7v" class="detail-art">
+            <span data-hf-id="hf-w2dv" class="detail-art-caption">A FICTIONAL VISUAL STAND-IN</span>
+          </div>
+          <h2 data-hf-id="hf-587g" class="detail-title">Afterglow</h2>
+          <p data-hf-id="hf-pjo5" class="detail-meta">Movie · Sample title</p>
+          <div data-hf-id="hf-4s2t" class="detail-actions">
+            <div data-hf-id="hf-plk2" class="detail-action">
+              <svg data-hf-id="hf-35ls" viewBox="0 0 24 24" aria-hidden="true">
+                <path data-hf-id="hf-xsyn" d="M6 4.5h12v16l-6-4-6 4z" />
+              </svg>
+              <span data-hf-id="hf-9dlg">Save</span>
+            </div>
+            <div data-hf-id="hf-llzo" class="detail-action watchlist-action" id="watchlist-action">
+              <svg data-hf-id="hf-46qg" viewBox="0 0 24 24" aria-hidden="true">
+                <path data-hf-id="hf-1zsu" d="M12 5v14M5 12h14" />
+              </svg>
+              <span data-hf-id="hf-iy0e">Add to Watchlist</span>
+            </div>
+            <div data-hf-id="hf-l0li" class="detail-action">
+              <svg data-hf-id="hf-2ztd" viewBox="0 0 24 24" aria-hidden="true">
+                <path data-hf-id="hf-wqj6" d="M8 5.5 19 12 8 18.5z" />
+              </svg>
+              <span data-hf-id="hf-cl5o">Watch</span>
+            </div>
+          </div>
+          <p data-hf-id="hf-wys4" class="detail-overview">
+            Choose a title, then save it for later or open its watch screen.
+          </p>
+        </div>
+        <div data-hf-id="hf-leoy" class="feature-copy" id="details-copy">
+          <div data-hf-id="hf-fhwt" class="scene-label">Keep it close</div>
+          <h2 data-hf-id="hf-dhv3">Save the ones<br data-hf-id="hf-rsrt" />you love.</h2>
+          <p data-hf-id="hf-32sv">One tap to save it or add it to your watchlist.</p>
+        </div>
+      </section>
+
+      <section data-hf-id="hf-5xut"
+        id="watch-scene"
+        class="clip"
+        data-start="14.5"
+        data-duration="5.5"
+        data-track-index="3"
+        aria-label="Open the AnzoFlix watch screen"
+      >
+        <div data-hf-id="hf-cgxa" class="watch-panel" id="watch-panel">
+          <div data-hf-id="hf-nd85" class="app-header">
+            <div data-hf-id="hf-dkzf" class="watch-title">Afterglow</div>
+            <div data-hf-id="hf-vm5y" class="profile-dot" aria-hidden="true"></div>
+          </div>
+          <div data-hf-id="hf-u4y4" class="player-window">
+            <div data-hf-id="hf-iv4a" class="play-ring" aria-hidden="true">
+              <span data-hf-id="hf-5kb8" class="play-triangle"></span>
+            </div>
+            <p data-hf-id="hf-4amw" class="playback-copy">Checking authorized playback sources…</p>
+          </div>
+        </div>
+        <div data-hf-id="hf-yhgi" class="end-card" id="end-card">
+          <div data-hf-id="hf-jbzb" class="brand">
+            <svg data-hf-id="hf-y0u9" class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+              <path data-hf-id="hf-z3a7"
+                d="M6 15h36v25H6zM6 15l5-8h36l-5 8M14 7l5 8m7-8 5 8m7-8 5 8"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+              />
+            </svg>
+            <span data-hf-id="hf-db2f">AnzoFlix</span>
+          </div>
+          <p data-hf-id="hf-jh2t" class="end-line">Browse. Save. Watch.</p>
+          <div data-hf-id="hf-ro1e" class="end-rule"></div>
+        </div>
+      </section>
+
+      <audio data-hf-id="hf-u0hd"
+        id="music"
+        data-start="0"
+        data-duration="20"
+        data-track-index="9"
+        data-timeline-role="music"
+        data-volume="0.24"
+        data-fade-in="0.7"
+        data-fade-out="1.5"
+        src="assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3"
+      ></audio>
+      <audio data-hf-id="hf-jh50"
+        id="browse-sfx"
+        data-start="4.45"
+        data-duration="0.6"
+        data-track-index="10"
+        data-volume="0.28"
+        src="assets/sfx/casino/card-slide-1.ogg"
+      ></audio>
+      <audio data-hf-id="hf-yfqb"
+        id="watchlist-sfx"
+        data-start="11.65"
+        data-duration="0.01"
+        data-track-index="11"
+        data-volume="0.28"
+        src="assets/sfx/interface/click_003.ogg"
+      ></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#curtain-scene", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0);
+      tl.fromTo("#hero-photo", { scale: 1.045 }, { scale: 1, duration: 4, ease: "none" }, 0);
+      tl.fromTo("#hero-copy", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.7 }, 0.4);
+
+      tl.fromTo("#browse-scene", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 4);
+      tl.fromTo("#browse-panel", { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.55 }, 4.05);
+      tl.fromTo("#browse-copy", { opacity: 0, x: 22 }, { opacity: 1, x: 0, duration: 0.55 }, 4.35);
+      tl.fromTo(".poster-card", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.42, stagger: 0.055 }, 4.5);
+
+      tl.fromTo("#details-scene", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 9.5);
+      tl.fromTo("#detail-panel", { opacity: 0, x: -22 }, { opacity: 1, x: 0, duration: 0.55 }, 9.58);
+      tl.fromTo("#details-copy", { opacity: 0, x: 18 }, { opacity: 1, x: 0, duration: 0.55 }, 9.85);
+      tl.fromTo("#watchlist-action", { scale: 0.94 }, { scale: 1.04, duration: 0.16, yoyo: true, repeat: 1 }, 11.62);
+
+      tl.fromTo("#watch-scene", { opacity: 0 }, { opacity: 1, duration: 0.45 }, 14.5);
+      tl.fromTo("#watch-panel", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55 }, 14.62);
+      tl.to("#watch-panel", { opacity: 0, duration: 0.28 }, 16.74);
+      tl.fromTo("#end-card", { opacity: 0 }, { opacity: 1, duration: 0.72 }, 17.02);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

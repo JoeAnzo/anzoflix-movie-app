@@ -93,21 +93,9 @@ export default function WatchScreen() {
   }, [episode, id, mediaType, season]);
 
   return (
-  <SafeAreaView>
-    <View className="flex-1 bg-[#141414]">
-      <View className="flex-row items-center gap-4 px-4 py-2">
-        <TouchableOpacity
-          onPress={() => router.back()}
-          accessibilityRole="button"
-          accessibilityLabel="Go back"
-          className="p-2"
-        >
-          <Ionicons name="arrow-back" size={22} color="white" />
-        </TouchableOpacity>
-        <Text className="flex-1 text-lg font-bold text-white" numberOfLines={1}>
-          {title || "Watch"}
-        </Text>
-      </View>
+  <SafeAreaView style={{ flex: 1, backgroundColor:'#141414'}}>
+    <View className="flex-1 bg-[#141414]" style={{ flex: 1 }}>
+      
 
       {sourceUrl ? (
         <MoviePlayer sourceUrl={sourceUrl} />

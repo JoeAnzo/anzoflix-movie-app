@@ -1,0 +1,366 @@
+{
+  "version": 1,
+  "historyId": "c7f8f3a2-ba1c-452b-a646-1f7b216e2d48",
+  "currentRevision": "ad5e633d-14f0-4f36-9585-e08a94cefe0d",
+  "pendingChanges": false,
+  "files": {
+    "AGENTS.md": {
+      "hash": "1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/1d/1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5"
+    },
+    "CLAUDE.md": {
+      "hash": "1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/1d/1d4f0c8ca2507b94fd7c9df709fff01416adbd51a0f922b9d6ed2f40129147d5"
+    },
+    "assets/images/cinemaHall.jpg": {
+      "hash": "43a24e3faf827d47be8d4e645bcd0c50d6ff846a668dd0d18daffd2ded59b704",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/43/43a24e3faf827d47be8d4e645bcd0c50d6ff846a668dd0d18daffd2ded59b704"
+    },
+    "assets/sfx/casino/card-slide-1.ogg": {
+      "hash": "006cf9822d15d7063f8899e56041f41646df30adb6fbd8b974ee5d5420012690",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/00/006cf9822d15d7063f8899e56041f41646df30adb6fbd8b974ee5d5420012690"
+    },
+    "assets/sfx/interface/click_003.ogg": {
+      "hash": "2fa929138bc3a0f432696588f66eac94b8f6d463905ec8808c6461ce4b054292",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/2f/2fa929138bc3a0f432696588f66eac94b8f6d463905ec8808c6461ce4b054292"
+    },
+    "assets/vendor/gsap.min.js": {
+      "hash": "c174bfce53a729418d57a8ad8625e7247c793a22fef8e2851e3cfa3de9cd8280",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/c1/c174bfce53a729418d57a8ad8625e7247c793a22fef8e2851e3cfa3de9cd8280"
+    },
+    "hyperframes.json": {
+      "hash": "53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/53/53dbce1e19aa713cbb12ee0bc4d206143b45ab15e6ffbfcaa8f69572d4d24d50"
+    },
+    "index.html": {
+      "hash": "a2228393a83369d9bfbdf47d7198ff2f90f2990d992209208ac10c129f202be6",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/a2/a2228393a83369d9bfbdf47d7198ff2f90f2990d992209208ac10c129f202be6"
+    },
+    "meta.json": {
+      "hash": "047a24f9c7e00d32caf264acd02a127378496d1c654bd6bb9d002a22a8f47c8c",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/04/047a24f9c7e00d32caf264acd02a127378496d1c654bd6bb9d002a22a8f47c8c"
+    },
+    "package.json": {
+      "hash": "19f9dec9a79c98503c969010cec070b2b99e9bfa47987709227e3784c917e211",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/19/19f9dec9a79c98503c969010cec070b2b99e9bfa47987709227e3784c917e211"
+    },
+    "assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3": {
+      "hash": "aa56ab1cdcbef6b05566c6a7c114323078580ccf6a740a9e6c6b6c4b40b4389f",
+      "content": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/aa/aa56ab1cdcbef6b05566c6a7c114323078580ccf6a740a9e6c6b6c4b40b4389f"
+    }
+  },
+  "revisions": {
+    "f965a98d-9063-4eaa-af9f-e7aafb783b0b": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792655524415,
+      "endedAt": 1792655524421,
+      "files": {
+        "index.html": {
+          "before": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/cc/cca1ed3d4c8a6d736083be44886fe15fbc6ce123b4be4f7688e79f4994c68cda",
+          "after": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/f9/f996a949cbda31e7f379fa5ceae0351902e74b462b8bedb1b1c668fb60283fe3"
+        }
+      }
+    },
+    "e2663d39-2d8c-4010-91ad-f6a111b3f1b5": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792655624900,
+      "endedAt": 1792655624903,
+      "files": {
+        "index.html": {
+          "before": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/f9/f996a949cbda31e7f379fa5ceae0351902e74b462b8bedb1b1c668fb60283fe3",
+          "after": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/4f/4fc5eedea9ce3c129c751f3b85591150ba958fd30ad7dcb7389217045b3e1a52"
+        }
+      }
+    },
+    "4c60a51c-befe-46c1-8c20-26f635202943": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792655781787,
+      "endedAt": 1792655781794,
+      "files": {
+        "index.html": {
+          "before": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/4f/4fc5eedea9ce3c129c751f3b85591150ba958fd30ad7dcb7389217045b3e1a52",
+          "after": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/46/46955b1c228fad286be5b647491ae5797becd9c16315de05b7d97ec1989b62bf"
+        }
+      }
+    },
+    "ad5e633d-14f0-4f36-9585-e08a94cefe0d": {
+      "actor": {
+        "kind": "outside",
+        "name": "Outside"
+      },
+      "label": "Changed outside the app",
+      "startedAt": 1792656106476,
+      "endedAt": 1792656108492,
+      "files": {
+        "index.html": {
+          "before": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/46/46955b1c228fad286be5b647491ae5797becd9c16315de05b7d97ec1989b62bf",
+          "after": "/home/joel/.cache/hyperframes/history/c7f8f3a2-ba1c-452b-a646-1f7b216e2d48/blobs/a2/a2228393a83369d9bfbdf47d7198ff2f90f2990d992209208ac10c129f202be6"
+        }
+      }
+    }
+  },
+  "checks": {
+    "latest": {
+      "revision": "ad5e633d-14f0-4f36-9585-e08a94cefe0d",
+      "id": "ff90950d-72a5-4c26-b533-dc8bdedc5dd8"
+    },
+    "revisions": {
+      "f965a98d-9063-4eaa-af9f-e7aafb783b0b": [
+        {
+          "id": "ce0bdd7d-3d2a-4b53-9ce6-7a751047543d",
+          "scope": "project",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792655556471,
+          "contentHash": "c2c9a41b9bf8bd95f62458859a1ab45891c0f65511f899334d75780710cd5bac",
+          "revision": "f965a98d-9063-4eaa-af9f-e7aafb783b0b",
+          "inputFingerprint": "4a211811ea845404c85e72960642a6d16ca18d1f0a7b42a09a5993c0b8d5d0c7",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "92cc2a65-fde3-4de1-a871-5947aab02be7"
+        }
+      ],
+      "e2663d39-2d8c-4010-91ad-f6a111b3f1b5": [
+        {
+          "id": "adfedc8e-c139-4d7b-886d-7a99a23cbf6d",
+          "scope": "project",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792655653201,
+          "contentHash": "a4ea6539652d4312041115cc329d47c03e83b7221ee22eb7a43da0c325fc3ab8",
+          "revision": "e2663d39-2d8c-4010-91ad-f6a111b3f1b5",
+          "inputFingerprint": "0965c9097dfde468a265a4c18ebc9b90d29656ee1d661053881c575b9117cc3d",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "92cc2a65-fde3-4de1-a871-5947aab02be7"
+        }
+      ],
+      "ad5e633d-14f0-4f36-9585-e08a94cefe0d": [
+        {
+          "id": "ff90950d-72a5-4c26-b533-dc8bdedc5dd8",
+          "scope": "project",
+          "report": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/.hyperframes/artifacts/checks/ff90950d-72a5-4c26-b533-dc8bdedc5dd8.json",
+          "metadata": {
+            "ok": true,
+            "browserSkipped": false,
+            "options": {
+              "samples": 9,
+              "atTransitions": false,
+              "maxIssues": 80,
+              "collapseStatic": true,
+              "tolerance": 2,
+              "timeout": 3000,
+              "contrast": true,
+              "strict": false,
+              "snapshots": false,
+              "browserGpuMode": "auto"
+            }
+          },
+          "createdAt": 1792656217181,
+          "contentHash": "a4ea6539652d4312041115cc329d47c03e83b7221ee22eb7a43da0c325fc3ab8",
+          "revision": "ad5e633d-14f0-4f36-9585-e08a94cefe0d",
+          "inputFingerprint": "23421c03b8e856a691f5304fdbfb66a828bf4adb3dcddf37e70a9396ca59ab9a",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision"
+        }
+      ]
+    },
+    "unversioned": [
+      {
+        "id": "3bda09d0-8f5e-4096-b7cf-9f8306fffa74",
+        "scope": "project",
+        "report": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/composition/.hyperframes/artifacts/checks/3bda09d0-8f5e-4096-b7cf-9f8306fffa74.json",
+        "metadata": {
+          "ok": false,
+          "browserSkipped": false,
+          "options": {
+            "samples": 9,
+            "atTransitions": false,
+            "maxIssues": 80,
+            "collapseStatic": true,
+            "tolerance": 2,
+            "timeout": 3000,
+            "contrast": true,
+            "strict": false,
+            "snapshots": false,
+            "browserGpuMode": "auto"
+          }
+        },
+        "createdAt": 1792655397744,
+        "contentHash": "e5df8f341c44ebc22a5189164f2680aa918d3d0149927647efbfe85d58836b54",
+        "revision": null,
+        "inputFingerprint": "48b8938753d9dfd970b3b81579141a46958df4582c0e317759d9ece3f86a7abb",
+        "inputScope": "local-project-files",
+        "attribution": "unversioned"
+      }
+    ]
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {
+      "4c60a51c-befe-46c1-8c20-26f635202943": [
+        {
+          "scope": "full",
+          "id": "d64a15ec-d901-49dc-ad70-5a774b0f013e-0",
+          "time": 1,
+          "metadata": {
+            "width": 1280,
+            "height": 720,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792656003160,
+          "contentHash": "8c3c1f41b395d681907a08fda893a75afaab1fa34e77d29b66941fc71addb124",
+          "revision": "4c60a51c-befe-46c1-8c20-26f635202943",
+          "inputFingerprint": "6924ffd88bbb94a9f2798235d8db4cba1480dc65e5113d8cfb76c04b7b8e7d7f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "92cc2a65-fde3-4de1-a871-5947aab02be7"
+        },
+        {
+          "scope": "full",
+          "id": "d64a15ec-d901-49dc-ad70-5a774b0f013e-1",
+          "time": 6.5,
+          "metadata": {
+            "width": 1280,
+            "height": 720,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792656003161,
+          "contentHash": "e31b6c61d51072562f9207e3c1d321f902f278ce40cc2a796f94181cbbfc7163",
+          "revision": "4c60a51c-befe-46c1-8c20-26f635202943",
+          "inputFingerprint": "6924ffd88bbb94a9f2798235d8db4cba1480dc65e5113d8cfb76c04b7b8e7d7f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "92cc2a65-fde3-4de1-a871-5947aab02be7"
+        },
+        {
+          "scope": "full",
+          "id": "d64a15ec-d901-49dc-ad70-5a774b0f013e-2",
+          "time": 12,
+          "metadata": {
+            "width": 1280,
+            "height": 720,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792656003161,
+          "contentHash": "6aa0d565b17fede5a114b423ff4a38303c3fb33678e1b1f3fcdeeab61dbf1b35",
+          "revision": "4c60a51c-befe-46c1-8c20-26f635202943",
+          "inputFingerprint": "6924ffd88bbb94a9f2798235d8db4cba1480dc65e5113d8cfb76c04b7b8e7d7f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "92cc2a65-fde3-4de1-a871-5947aab02be7"
+        },
+        {
+          "scope": "full",
+          "id": "d64a15ec-d901-49dc-ad70-5a774b0f013e-3",
+          "time": 15,
+          "metadata": {
+            "width": 1280,
+            "height": 720,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792656003162,
+          "contentHash": "eb9c6d187e29a7d1d413a67a729b7bd7422207ca63e1aaa82e1c21603b45445d",
+          "revision": "4c60a51c-befe-46c1-8c20-26f635202943",
+          "inputFingerprint": "6924ffd88bbb94a9f2798235d8db4cba1480dc65e5113d8cfb76c04b7b8e7d7f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "92cc2a65-fde3-4de1-a871-5947aab02be7"
+        },
+        {
+          "scope": "full",
+          "id": "d64a15ec-d901-49dc-ad70-5a774b0f013e-4",
+          "time": 18,
+          "metadata": {
+            "width": 1280,
+            "height": 720,
+            "zoomScale": 1,
+            "browserGpuMode": "auto",
+            "warnings": [],
+            "partial": false
+          },
+          "createdAt": 1792656003162,
+          "contentHash": "320fe8a3b5ec1615974058963aea1586e083ae5ccb3f29044de5e2885e79a955",
+          "revision": "4c60a51c-befe-46c1-8c20-26f635202943",
+          "inputFingerprint": "6924ffd88bbb94a9f2798235d8db4cba1480dc65e5113d8cfb76c04b7b8e7d7f",
+          "inputScope": "local-project-files",
+          "attribution": "recorded-revision",
+          "status": "cleaned",
+          "cleanedAfterRender": "92cc2a65-fde3-4de1-a871-5947aab02be7"
+        }
+      ]
+    },
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "92cc2a65-fde3-4de1-a871-5947aab02be7",
+      "completedAt": 1792656982897,
+      "output": "/home/joel/Desktop/App Development/anzoflix-movie-app/brag-output-2026-10-22-102419/brag.mp4",
+      "status": "completed",
+      "revision": "ad5e633d-14f0-4f36-9585-e08a94cefe0d"
+    },
+    "retainedRevisions": [
+      "ad5e633d-14f0-4f36-9585-e08a94cefe0d"
+    ]
+  },
+  "pendingArtifactCleanup": []
+}

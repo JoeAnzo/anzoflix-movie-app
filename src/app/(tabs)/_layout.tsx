@@ -6,7 +6,7 @@ import "../global.css";
 
 export default function TabLayout() {
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-[#141414]">
       <Tabs
         initialRouteName="home"
         screenOptions={{
