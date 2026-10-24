@@ -17,7 +17,7 @@
     "expo-linking": "~57.0.10",
     "expo-router": "~57.0.15",
     "expo-screen-orientation": "~57.0.2",
-    "expo-splash-screen": "^55.0.24",
+    "expo-splash-screen": "~57.0.10",
     "expo-status-bar": "~57.0.1",
     "expo-symbols": "~57.0.2",
     "expo-system-ui": "~57.0.2",
@@ -27,11 +27,11 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.87.0",
-    "react-native": "0.86.2",
+    "react-native": "0.86.3",
     "react-native-appwrite": "^0.34.0",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture-handler": "~2.32.0",
-    "react-native-reanimated": "^4.5.1",
+    "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.26.0",
     "react-native-svg": "15.15.4",
@@ -39,7 +39,7 @@
     "react-native-web": "~0.21.0",
     "react-native-web-webview": "^1.0.2",
     "react-native-webview": "13.16.1",
-    "react-native-worklets": "^0.13.0",
+    "react-native-worklets": "0.10.1",
     "react-native-youtube-iframe": "^2.4.1",
     "tailwindcss": "^3.4.19",
     "zod": "^4.5.4"
@@ -48,7 +48,7 @@
     "@types/react": "~19.2.2",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~57.0.2",
-    "typescript": "^5.9.3"
+    "typescript": "~6.0.3"
   },
   "scripts": {
     "start": "expo start",
