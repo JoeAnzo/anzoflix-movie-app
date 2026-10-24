@@ -211,7 +211,13 @@ const Category = () => {
         }
       >
         {isLoading ? (
-          <ActivityIndicator size="large" color="#E50914" />
+        <View className="flex-1 items-center justify-center bg-[#141414]">
+          <ActivityIndicator
+            color="#E50914"
+            size="large"
+            className="text-[#E50914] scale-150"
+          />
+        </View>
         ) : (
           <>
             <GenreSection
